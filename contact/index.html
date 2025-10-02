@@ -11,16 +11,13 @@
         <a href = 'contact/index.html'> Contact Me! </a>
     </nav>
     <form action = "mailto:jackkalsched@gmail.com" method = "POST" enctype = "text/plain"> 
-        <label>
-            <index name = 'email' type = 'email'></index>
-        </label>
-        <label>
-            <index name = 'subject'></index>
-        </label>
-        <label>
-            <textarea name = 'body'></textarea> 
-        </label>
-        <button></button>
+        <label for = 'email'> Email: </label>
+            <index name = 'email' type = 'email' id = 'email' />
+        <label for = 'subject'> Subject: </label>
+            <index name = 'subject' id = 'subject' />
+        <label for = 'text'> Body: </label>
+            <textarea name = 'body' id = 'text'></textarea> 
+        <button>Send</button>
     </form>
 </head>
 <body>
