@@ -1,27 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="--color-accent: oklch(85% 15% 10); accent-color: var(--color-accent);">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
-    <h1>Contact Header</h1>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    :root {
+      --border-color: oklch(80% 3% 200);
+    }
+    body {
+      max-width: 100ch;
+      padding: 1rem;
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: 400%;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+
+    nav {
+      display: flex;
+      text-align: center;
+      margin-bottom: 25px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    nav a {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      padding: 0.5em;
+    }
+
+    nav a:hover {
+      border-bottom-width: 4px;
+      border-bottom-style: solid;
+      border-bottom-color: var(--color-accent);
+      padding-bottom: 0.5em;
+      background-color: oklch(from var(--color-accent) 95% 5% h);
+    }
+    nav a[href*="contact/index.html"] {
+      border-bottom-width: 4px;
+      border-bottom-style: solid;
+      border-bottom-color: var(--border-color);
+      padding-bottom: 0.5em;
+    }
+    form {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1em;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    label {
+      display: contents;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      font: inherit;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      grid-column: 1 / -1;
+      justify-self: start;
+      width: 100%;
+      font: inherit;
+      padding: 0.75em;
+    }
+  </style>
 </head>
+
 <body>
-    <nav>
-        <a href = '../index.html'> Home Page </a>
-        <a href = '../projects/index.html'> My Projects </a>
-        <a href = '../contact/index.html'> Contact Me! </a>
-        <a href= "https://github.com/jackkalsched" target="_blank"> GitHub </a>
-        <a href = '../resume/index.html'> Resume/CV </a>
-    </nav>
-    <form action = "mailto:jackkalsched@gmail.com" method = "POST" enctype = "text/plain"> 
-        <label for = 'email'> Email: </label>
-            <input name = 'email' type = 'email' id = 'email'></input>
-        <label for = 'subject'> Subject: </label>
-            <input name = 'subject' id = 'subject'></input>
-        <label for = 'text'> Body: </label>
-            <textarea name = 'body' id = 'text'></textarea> 
-        <button>Send</button>
-    </form>
+  <h1>Contact Header</h1>
+
+  <nav>
+    <a href="../index.html" class="current">Home Page</a>
+    <a href="../projects/index.html">My Projects</a>
+    <a href="../contact/index.html">Contact Me!</a>
+    <a href="https://github.com/jackkalsched" target="_blank">GitHub</a>
+    <a href="../resume/index.html">Resume/CV</a>
+  </nav>
+
+  <form action="mailto:jackkalsched@gmail.com" method="POST" enctype="text/plain">
+    <label for="name">
+      <span>Email:</span>
+      <input id="name" name="name" type="text" />
+    </label>
+
+    <label for="email">
+      <span>Subject:</span>
+      <input id="email" name="email" type="email" />
+    </label>
+
+    <label for="message">
+      <span>Message:</span>
+      <textarea id="message" name="message" rows="5"></textarea>
+    </label>
+
+    <button type="submit">Send</button>
+  </form>
 </body>
 </html>

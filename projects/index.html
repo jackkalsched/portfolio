@@ -1,18 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="--color-accent: oklch(85% 15% 10); accent-color: var(--color-accent);">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
-    <h1>Projects Header</h1>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Navigation hover style */
+        nav a:hover {
+          border-bottom-width: 4px;
+          border-bottom-style: solid;
+          border-bottom-color: var(--color-accent);
+          padding-bottom: 0.5em;
+          background-color: oklch(from var(--color-accent) 95% 5% h);
+        }
+
+        h1 {
+          font-size: 400%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          line-height: 1.1;
+          text-wrap: balance;
+        }
+    </style>
 </head>
-<body>
-    <nav>
-        <a href = '../index.html'> Home Page </a>
-        <a href = '../projects/index.html'> My Projects </a>
-        <a href = '../contact/index.html'> Contact Me! </a>
-        <a href = "https://github.com/jackkalsched" target = "_blank"> GitHub </a>
-        <a href = '../resume/index.html'> Resume/CV </a>
-    </nav> 
+
+<body style="max-width: 100ch; padding: 1rem; margin-inline: auto;">
+    <h1>Projects Header</h1>
+
+    <nav style="display: flex; text-align: center; margin-bottom: 25px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: oklch(80% 3% 200);">
+        <a href="../index.html" class="current" style="flex: 1; text-align: center; text-decoration: none; color: inherit; padding: 0.5em;">Home Page</a>
+        <a href="../projects/index.html" style="flex: 1; text-align: center; text-decoration: none; color: inherit; padding: 0.5em; border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: oklch(80% 3% 200); padding-bottom: 0.5em;">My Projects</a>
+        <a href="../contact/index.html" style="flex: 1; text-align: center; text-decoration: none; color: inherit; padding: 0.5em;">Contact Me!</a>
+        <a href="https://github.com/jackkalsched" target="_blank" style="flex: 1; text-align: center; text-decoration: none; color: inherit; padding: 0.5em;">GitHub</a>
+        <a href="../resume/index.html" style="flex: 1; text-align: center; text-decoration: none; color: inherit; padding: 0.5em;">Resume/CV</a>
+    </nav>
+
+    <div class="projects" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));">
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Lorem ipsum dolor sit.</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid delectus blanditiis repellat accusamus quas nisi vero dignissimos.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Dolor neque officiis incidunt?</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Ea vero molestias voluptates quaerat numquam atque. Accusantium voluptas tempore assumenda, quod vel, molestiae corrupti soluta cupiditate accusamus atque in quas voluptate.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Iure dolorem delectus nisi.</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Reprehenderit similique reiciendis voluptatibus nesciunt est, praesentium cupiditate? Recusandae ipsum molestiae laudantium suscipit voluptates at.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Pariatur facere beatae molestiae!</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Omnis doloremque nam harum dolore corrupti, reiciendis blanditiis recusandae distinctio exercitationem cumque beatae voluptatem modi ut laborum.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Quaerat quas voluptatum rem.</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Quos, et officia! Fugit error sint tempora optio. Esse molestiae officia autem vitae officiis nobis incidunt voluptate aliquid ex neque facilis ab necessitatibus.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Deleniti quibusdam sed repellendus!</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Nisi illo laboriosam praesentium nihil totam consequuntur aperiam porro cupiditate. Voluptates reprehenderit nostrum id eveniet molestiae fugiat.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Odio veritatis minima dolor!</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Velit accusantium, placeat sapiente inventore deserunt tempore nihil aut itaque distinctio similique officia nobis fuga consequuntur earum harum.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Ratione reprehenderit obcaecati est.</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Atque fugiat odio, molestias accusamus commodi sint laborum dolores perspiciatis, consectetur praesentium officia distinctio quibusdam nobis blanditiis et quidem dolor repellendus.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Commodi sunt at recusandae.</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Minima error cum architecto at blanditiis! Quo soluta repellendus unde alias, aut a aspernatur consequatur commodi laboriosam pariatur eos cupiditate perspiciatis.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Neque expedita consequuntur laudantium.</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Incidunt placeat obcaecati deleniti, beatae error, ex sit distinctio laudantium alias iste unde sunt reiciendis explicabo quaerat recusandae tenetur quae.</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Modi dignissimos laboriosam ducimus?</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Quo adipisci nemo laborum necessitatibus? Repellat commodi explicabo amet dicta, quia alias modi laborum, eum officiis ducimus, neque doloremque molestiae quis?</p>
+        </article>
+
+        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
+            <h2 style="margin: 0;">Maiores praesentium illum dolore.</h2>
+            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
+            <p>Incidunt illo quod, inventore non quo ipsum? Placeat esse, doloribus adipisci unde officia, neque explicabo quidem voluptatum assumenda quis nisi maxime reiciendis aspernatur.</p>
+        </article>
+    </div>
 </body>
 </html>

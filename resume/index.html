@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="--color-accent: oklch(85% 15% 10); accent-color: var(--color-accent);">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume</title>
     <h1>Resume</h1>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        nav a:hover {
+        border-bottom-width: 4px;
+        border-bottom-style: solid;
+        border-bottom-color: var(--color-accent);
+        padding-bottom: 0.5em;
+        background-color: oklch(from var(--color-accent) 95% 5% h)
+        }
+    </style>
     <nav>
-        <a href = '../index.html'> Home Page </a>
+        <a href="../index.html" class="current" style="flex: 1; text-align: center; text-decoration: none; color: inherit; padding: 0.5em;">Home Page</a>
     </nav>
 </head>
 <body>
