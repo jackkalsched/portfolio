@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact</title>
-  <link rel="stylesheet" href="styles.css">
-
+  <link rel="stylesheet" href="../style.css">
+  <script type="module" src="../global.js"></script>
   <style>
     :root {
       --border-color: oklch(80% 3% 200);
@@ -90,14 +90,6 @@
 <body>
   <h1>Contact Header</h1>
 
-  <nav>
-    <a href="../index.html" class="current">Home Page</a>
-    <a href="../projects/index.html">My Projects</a>
-    <a href="../contact/index.html">Contact Me!</a>
-    <a href="https://github.com/jackkalsched" target="_blank">GitHub</a>
-    <a href="../resume/index.html">Resume/CV</a>
-  </nav>
-
   <form action="mailto:jackkalsched@gmail.com" method="POST" enctype="text/plain">
     <label for="name">
       <span>Email:</span>
@@ -116,5 +108,6 @@
 
     <button type="submit">Send</button>
   </form>
+
 </body>
 </html>
