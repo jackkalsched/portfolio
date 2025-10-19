@@ -1,5 +1,6 @@
 html {
   --color-accent: oklch(56.411% 0.09253 204.546);
+  color-scheme: light dark;
 }
 
 body {
@@ -46,6 +47,7 @@ nav {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: oklch(50% 10% 200 / 40%);
+  background-color: oklch(from var(--color-accent) 95% 5% h);
   display: flex;
   gap: 1em
 }
