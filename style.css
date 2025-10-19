@@ -1,122 +1,104 @@
+/* ---------- ROOT & ACCENTS ---------- */
 html {
   --color-accent: oklch(56.411% 0.09253 204.546);
   color-scheme: light dark;
+  font-family: system-ui;
 }
 
 body {
   background-color: Canvas;
   color: CanvasText;
   max-width: 100ch;
-  font: 100%/1.5 system-ui;
-  margin-inline: 100px;
-  padding: 20px;
+  margin: 0 auto;         /* centers body content horizontally */
+  padding: 1rem;
+  text-align: center;      /* center all inline text by default */
+  font-size: 100%;
+  line-height: 1.5;
 }
 
-.projects{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-  grid-template-rows: subgrid;
-  grid-row: span 3;
-  min-width: 15em;
-  max-width: 1fr;
-  margin: 0;
-  gap: 1em
+/* ---------- NAVIGATION ---------- */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin-bottom: 25px;
+  border-bottom: 1px solid oklch(80% 3% 200);
 }
+
+nav a {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5em;
+}
+
+nav a.current {
+  font-weight: bold;
+  border-bottom: 4px solid oklch(80% 3% 200);
+  padding-bottom: 0.5em;
+}
+
+nav a:hover {
+  border-bottom: 4px solid var(--color-accent);
+  padding-bottom: 0.5em;
+  background-color: oklch(from var(--color-accent) 95% 5% h);
+}
+
+/* ---------- DARK MODE SWITCH ---------- */
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+}
+
+/* ---------- HEADINGS ---------- */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1;
+  font-weight: 650;
+  margin-block: 0.5em;
+}
+
+h1 { font-size: 4rem; margin-top: 0.5em; margin-bottom: 0.3em; }
+h2 { font-size: 2rem; margin-bottom: 0.25em; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.2rem; }
+
+/* ---------- PROJECTS GRID ---------- */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 1em;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* ---------- FORMS ---------- */
 form {
   display: grid;
-  grid-template-columns: auto 1fr; 
-  gap: 0.5rem
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
 }
 
 label {
   display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1; 
+  grid-column: 1 / -1;
 }
-input,
-textarea,
-button{
+
+input, textarea, button, select {
   font: inherit;
   width: 100%;
   box-sizing: border-box;
   margin-block: 5px;
 }
 
-nav {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: oklch(50% 10% 200 / 40%);
-  display: flex;
-  gap: 1em;
-  display: flex;
-  text-align: center;
-  margin-bottom: 25px;
-  border-bottom: 1px solid oklch(80% 3% 200);
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-
-nav a {
+/* ---------- IMAGES ---------- */
+img {
   display: block;
-  text-decoration: none;
-  color: inherit;
-  text-align: center;
-  padding: 0.5em;
-  box-sizing: border-box;
-}
-
-
-nav li {
-  flex: 1;
-}
-
-nav a.current {
-  font-weight: bold;
-  border-bottom-width: 0.4em;
-  border-bottom-style: solid;
-  border-bottom-color: oklch(80% 3% 200);
-  padding-bottom: 0.5em;
-}
-
-nav a:hover {
-  border-bottom-width: 4px;
-  border-bottom-style: solid;
-  border-bottom-color: var(--color-accent);
-  padding-bottom: 0.5em;
-  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.1;
-  text-wrap: balance;
-  font-weight: 650; 
-  margin-block: 0.5em;
-}
-
-h1 {
-  font-size: 400%;        
-  margin-top: 0.5em;
-  margin-bottom: 0.3em;
-}
-
-h2 {
-  font-size: 200%;
-  margin-bottom: 0.25em;
-}
-
-h3 { font-size: 150%; }
-h4 { font-size: 120%; }
-
-.color-scheme {
-  position: absolute; 
-  top: 1rem;
-  right: 1rem;
-  font-size: 0.8rem;
-  font-family: inherit;
+  margin: 1rem auto;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
 }
