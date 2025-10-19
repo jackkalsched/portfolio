@@ -31,10 +31,3 @@ for (const p of pages) {
   }
 
 const navLinks = $$("nav a");
-
-const currentLink = navLinks.find(
-    (a) => a.host === location.host && a.pathname === location.pathname
-  );
-  
-  // Add the "current" class if found
-  currentLink?.classList.add("current");
