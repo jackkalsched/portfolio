@@ -6,23 +6,7 @@
     <title>Resume</title>
     <h1>Resume</h1>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        nav a:hover {
-        border-bottom-width: 4px;
-        border-bottom-style: solid;
-        border-bottom-color: var(--color-accent);
-        padding-bottom: 0.5em;
-        background-color: oklch(from var(--color-accent) 95% 5% h);
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
+    <script type="module" src="global.js"></script>
     </style>
 </head>
 <body>
@@ -94,12 +78,5 @@
         <li>Non-fiction books</li>
         <li>Listening to albums front to back!</li>
     </ul>
-
-    <script>
-        const navLinks = $$("nav a");
-        console.log(navLinks);
-    </script>
-
-    <script type="module" src="../global.js"></script>
 </body>
 </html>
