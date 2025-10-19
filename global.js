@@ -12,9 +12,9 @@ const BASE_PATH =
 
 // ---------- PAGES NAV ----------
 let pages = [
-  { url: "", title: "Home" },
+  { url: "index.html", title: "Home Page" },
   { url: "projects/", title: "Projects" },
-  { url: "resume/", title: "Resume" },
+  { url: "resume/", title: "Resume/CV" },
   { url: "contact/", title: "Contact Me" },
   { url: "https://github.com/jackkalsched", title: "GitHub" },
 ];
