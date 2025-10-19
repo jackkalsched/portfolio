@@ -5,61 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume</title>
     <h1>Resume</h1>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles.css">
     <style>
-        body {
-          max-width: 100ch;
-          padding: 1rem;
-          margin-inline: auto;
-        }
-    
-        nav {
-          display: flex;
-          text-align: center;
-          margin-bottom: 25px;
-          border-bottom: 1px solid oklch(80% 3% 200);
-        }
-    
-        nav a {
-          flex: 1;
-          text-align: center;
-          text-decoration: none;
-          color: inherit;
-          padding: 0.5em;
-        }
-    
-        nav a.current {
-          border-bottom: 4px solid oklch(80% 3% 200);
-          padding-bottom: 0.5em;
-        }
-    
         nav a:hover {
-          border-bottom: 4px solid var(--color-accent);
-          padding-bottom: 0.5em;
-          background-color: oklch(from var(--color-accent) 95% 5% h);
+        border-bottom-width: 4px;
+        border-bottom-style: solid;
+        border-bottom-color: var(--color-accent);
+        padding-bottom: 0.5em;
+        background-color: oklch(from var(--color-accent) 95% 5% h);
         }
-    
-        img {
-          display: block;
-          margin: 1rem auto;
-          width: 100%;
-          max-width: 500px;
-          height: auto;
+
+        h1 {
+            text-align: center;
         }
-      </style>
+
+        h2 {
+            text-align: center;
+        }
+
+    </style>
     
       <script type="module" src="global.js"></script>
-    </style>
+
+    <nav style = "text-align: center;">
+        <a href="../index.html" class="current" style="flex: 1; text-align: center; text-decoration: none; color: inherit; padding: 0.5em;">Home Page</a>
+    </nav>
+
 </head>
 <body>
     <h1>Jack Kalsched</h1>
     <p style = "text-align: center;"> jackkalsched@gmail.com | 973-508-5357 | Maplewood, NJ | <a href = 'https://www.linkedin.com/in/jack-kalsched-b46194232/'> LinkedIn</a></p>
 
     <h2>EXPERIENCE</h2>
-    <article style = "margin-left: 360px;"> 
+    <article> 
         <h3>UCSD Tritons Baseball</h3> 
         <p><em>Lead Data Analyst</em>       |       October 2023 - Present</p> 
-        <ul style = 'max-width: 800px;'>
+        <ul>
             <li>Created pitch classification app using a combination of unsupervised Gaussian clustering models and supervised
                 classification models in Python with ML libraries such as scikit-learn and XGBoost</li>
             <li>Optimized conference schedule by implementing run-value based Monte Carlo simulations to produce win
@@ -69,35 +50,35 @@
         </ul>
     </article>
 
-    <article style = "margin-left: 360px;"> 
+    <article> 
         <h3>NielsenIQ</h3> 
         <p><em>Data Science Intern</em>       |        June 2025 - August 2025</p> 
-        <ul style = 'max-width: 800px;'>
+        <ul>
             <li>Developed automated internal streamlit app using Python and SQL queries to assist with client inquiries</li>
             <li>Identified regionally variant products using RMSE and other statistical metrics</li>
             <li>Assisted in Costco sales estimation initiative through demographic bias and competitor analysis</li>
         </ul>
     </article>
 
-    <article style = "margin-left: 360px;"> 
+    <article> 
         <h3>Hedge Fund Club @ UCSD</h3> 
         <p><em>Co-President</em>       |        January 2025 - June 2025</p> 
-        <ul style = 'max-width: 800px;'>
+        <ul>
             <li>Set annual and quarterly goals for member base growth, recruiting and marketing strategies.</li>
             <li>Maintained relationship with University advisors to sustain funding and expand networking opportunities</li>
             <li>Coordinated activities of other club directors and content of club curriculum</li>
         </ul>
 
         <p><em>Director of Quantitative Research</em>       |       September 2024 - January 2025</p>
-        <ul style = 'max-width: 800px;'>
+        <ul>
             <li>Taught financial analysis techniques and models; DCF, Reverse DCF, Monte Carlo Simulation</li>
         </ul>
     </article>
 
-    <article style = "margin-left: 360px;"> 
+    <article> 
         <h3>Triton Ball Sports Analytics</h3> 
         <p><em>Operations VP / Founding Member</em>       |        March 2025 - Present</p> 
-        <ul style = 'max-width: 800px;'>
+        <ul>
             <li>Founded UCSDs first sports analytics club</li>
             <li>Established connections with academic advisors and athletic teams in order to deploy data science project teams to
                 various D1 programs.</li>
@@ -106,14 +87,14 @@
     </article>
 
     <h2>PROJECTS</h2>
-    <p style = "margin-left: 360px;"><em>SMT 2025 Data Challenge</em>          |          March 2025 - August 2025</p>
-    <p style = "margin-left: 360px; max-width: 800px;"> This will be vague as the projects won't be available until October 6th, 2025. Using anonymized ball- and player-tracking data, I conducted analysis of baseball defenses
+    <p><em>SMT 2025 Data Challenge</em>          |          March 2025 - August 2025</p>
+    <p> This will be vague as the projects won't be available until October 6th, 2025. Using anonymized ball- and player-tracking data, I conducted analysis of baseball defenses
         through regression and tree-based classification models, and expected value formulas. Coupled with an R Shiny interactive dashboard and ~25-page paper outlining the applicability of the project's results, 
         the project exposes a faulty ideology in current defensive baseball. 
     </p>
 
     <h2>SKILLS & INTERESTS</h2>
-    <ul style = "margin-left: 360px;">
+    <ul>
         <li>Sports analytics</li>
         <li>Snowboarding</li>
         <li>Biking</li>

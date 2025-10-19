@@ -4,10 +4,12 @@ html {
 }
 
 body {
+  background-color: Canvas;
+  color: CanvasText;
+  max-width: 100ch;
   font: 100%/1.5 system-ui;
   margin-inline: 100px;
   padding: 20px;
-  text-align: center;
 }
 
 .projects{
@@ -114,4 +116,13 @@ h4 { font-size: 120%; }
   right: 1rem;
   font-size: 0.8rem;
   font-family: inherit;
+}
+
+body {
+  /* Set line height to 1.5 times the font size
+       and use the OS’s UI font as the website font
+     */
+  font: 100%/1.5 system-ui;
+  margin-inline: 100px;
+  padding: 20px;
 }
