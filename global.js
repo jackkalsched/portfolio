@@ -8,7 +8,7 @@ function $$(selector, context = document) {
 const BASE_PATH =
   location.hostname === "localhost" || location.hostname === "127.0.0.1"
     ? "/"
-    : ""; 
+    : "/portfolio/"; 
 
 let pages = [
   { url: "", title: "Home" },
@@ -37,8 +37,6 @@ for (let p of pages) {
    if (a.host !== location.host) {
       a.target = "_blank";
     }
-
-  url = !url.startsWith("http") ? BASE_PATH + url : url;
 
   nav.insertAdjacentHTML("beforeend", `<a href="${url}">${title}</a>`);
 }
