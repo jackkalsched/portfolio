@@ -82,11 +82,11 @@ nav a.current {
 }
 
 nav a:hover {
-  font-weight: bold;
-  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);  border-bottom-width: 0.4em;
+  border-bottom-width: 4px;
   border-bottom-style: solid;
   border-bottom-color: var(--color-accent);
   padding-bottom: 0.5em;
+  background-color: oklch(from var(--color-accent) 95% 5% h);
 }
 
 h1, h2, h3, h4, h5, h6 {
