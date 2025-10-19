@@ -13,7 +13,7 @@ const BASE_PATH = (location.hostname === "localhost" || location.hostname === "1
     currentLink?.classList.add('current');
   }
 
-const pages = [
+let pages = [
     { url: '', title: 'Home' },
     { url: 'projects/', title: 'Projects' },
     { url: 'resume/', title: 'Resume' },
@@ -24,10 +24,11 @@ const pages = [
 let nav = document.createElement('nav');
 document.body.prepend(nav);
 
-for (const p of pages) {
+for (let p of pages) {
     let url = p.url;
+    let title = p.title;
     url = !url.startsWith('http') ? BASE_PATH + url : url;
-    nav.insertAdjacentHTML('beforeend', `<a href="${url}">${p.title}</a>`);
+    nav.insertAdjacentHTML('beforeend', `<a href="${url}">${title}</a>`);
   }
 
 const navLinks = $$("nav a");
