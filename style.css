@@ -1,6 +1,6 @@
 html {
   --color-accent: oklch(56.411% 0.09253 204.546);
-  --color-scheme: light dark;
+  color-scheme: light dark;
 }
 
 body {
@@ -47,7 +47,6 @@ nav {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: oklch(50% 10% 200 / 40%);
-  background-color: oklch(from var(--color-accent) 95% 5% h);
   display: flex;
   gap: 1em
 }
@@ -93,7 +92,7 @@ nav a:hover {
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
   text-wrap: balance;
-  font-weight: 700; 
+  font-weight: 650; 
   margin-block: 0.5em;
 }
 
@@ -117,13 +116,4 @@ h4 { font-size: 120%; }
   right: 1rem;
   font-size: 0.8rem;
   font-family: inherit;
-}
-
-body {
-  /* Set line height to 1.5 times the font size
-       and use the OS’s UI font as the website font
-     */
-  font: 100%/1.5 system-ui;
-  margin-inline: 100px;
-  padding: 20px;
 }
