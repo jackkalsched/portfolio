@@ -1,9 +1,9 @@
 [
     {
-      "title": "Lorem ipsum dolor sit.",
-      "year": "2023",
+      "title": "SMT Data Challenge: The Man in the Middle",
+      "year": "2025",
       "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid delectus blanditiis repellat accusamus quas nisi vero dignissimos."
+      "description": "I created an optimal cutoff decision model for professional baseball using random forest models and expected run value formulas."
     },
     {
       "title": "Dolor neque officiis incidunt?",
