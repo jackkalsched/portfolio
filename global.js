@@ -1,7 +1,11 @@
 console.log("IT’S ALIVE!");
 
-function $$(selector, context = document) {
+// ---------- HELPER SELECTORS ----------
+export function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
+}
+export function $(selector, context = document) {
+  return context.querySelector(selector);
 }
 
 // ---------- BASE PATH FOR LINKS ----------
@@ -56,19 +60,70 @@ document.body.insertAdjacentHTML(
 
 const select = document.querySelector(".color-scheme select");
 
-// ---------- LOAD SAVED PREFERENCE ----------
 if ("colorScheme" in localStorage) {
-  document.documentElement.style.setProperty("color-scheme", localStorage.colorScheme);
+  document.documentElement.style.setProperty(
+    "color-scheme",
+    localStorage.colorScheme
+  );
   select.value = localStorage.colorScheme;
 } else {
-  select.value = "light dark"; // default automatic
+  select.value = "light dark";
 }
 
-// ---------- HANDLE USER CHANGES ----------
 select.addEventListener("input", (event) => {
   const value = event.target.value;
   document.documentElement.style.setProperty("color-scheme", value);
   localStorage.colorScheme = value;
   console.log("Color scheme changed to", value);
 });
+
+// ---------- FETCH JSON ----------
+export async function fetchJSON(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching or parsing JSON data:", error);
+    return [];
+  }
+}
+
+// ---------- RENDER PROJECTS ----------
+export function renderProjects(projects, containerElement, headingLevel = "h2") {
+  if (!containerElement) {
+    console.error("Invalid container element for renderProjects");
+    return;
+  }
+  containerElement.innerHTML = "";
+
+  if (!Array.isArray(projects) || projects.length === 0) {
+    containerElement.innerHTML = "<p>No projects found.</p>";
+    return;
+  }
+
+  for (const project of projects) {
+    const article = document.createElement("article");
+    article.innerHTML = `
+      <${headingLevel}>${project.title ?? "Untitled Project"}</${headingLevel}>
+      <img src="${project.image ?? ""}" alt="${project.title ?? ""}">
+      <p>${project.description ?? ""}</p>
+    `;
+    containerElement.appendChild(article);
+  }
+
+  // optional project count at top of page
+  const titleEl = document.querySelector(".projects-title");
+  if (titleEl) {
+    titleEl.textContent = `Projects (${projects.length})`;
+  }
+}
+
+// ---------- GITHUB DATA ----------
+export async function fetchGitHubData(username) {
+  return fetchJSON(`https://api.github.com/users/${username}`);
+}
 

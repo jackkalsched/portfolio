@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jack Kalsched: Personal Site and Portfolio</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Global site logic (navigation, color theme, reusable functions) -->
   <script type="module" src="global.js"></script>
+
+  <!-- Homepage logic: loads latest 3 projects + GitHub stats -->
+  <script type="module" src="index.js" defer></script>
+
   <style>
     body {
       max-width: 100ch;
@@ -46,14 +52,73 @@
       max-width: 500px;
       height: auto;
     }
+
+    /* --- New additions --- */
+    h2 {
+      margin-top: 2rem;
+      border-bottom: 2px solid oklch(80% 3% 200);
+      padding-bottom: 0.25rem;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    article {
+      border: 1px solid oklch(85% 5% 180);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      background: oklch(from var(--color-accent) 97% 3% h);
+    }
+
+    #profile-stats {
+      margin-top: 2.5rem;
+      padding: 1rem;
+      border: 1px solid oklch(80% 3% 200);
+      border-radius: 0.5rem;
+      background: oklch(from var(--color-accent) 97% 3% h);
+    }
+
+    #profile-stats dl {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem 1rem;
+      text-align: center;
+    }
+
+    #profile-stats dt {
+      font-weight: bold;
+    }
+
+    #profile-stats dd {
+      margin: 0;
+    }
   </style>
 </head>
+
 <body>
   <h1>Jack Kalsched</h1>
 
-  <p>Nice to meet you! I'm currently a junior at UC-San Diego studying Probability & Statistics and Data Science. I love baseball, snowboarding, working out, and reading!</p>
+  <p>
+    Nice to meet you! I'm currently a junior at UC-San Diego studying
+    Probability & Statistics and Data Science. I love baseball, snowboarding,
+    working out, and reading!
+  </p>
 
   <img src="images/IMG_4951.JPG" alt="Picture of me petting my friend's cat in his living room.">
 
+  <!-- === Latest Projects Section === -->
+  <h2 class="projects-title">Latest Projects</h2>
+  <div class="projects">
+    <!-- Dynamically inserted projects will appear here -->
+  </div>
+
+  <!-- === GitHub Stats Section === -->
+  <div id="profile-stats">
+    <!-- Fetched GitHub data will be inserted here -->
+  </div>
 </body>
 </html>

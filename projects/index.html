@@ -1,98 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" style="--color-accent: oklch(85% 15% 10); accent-color: var(--color-accent);">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
-    <link rel="stylesheet" href="../style.css">
-    <script type="module" src="../global.js"></script>
-    <style>
-        h1 {
-          font-size: 400%;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Jack Kalsched</title>
 
-        h1, h2, h3, h4, h5, h6 {
-          line-height: 1.1;
-          text-wrap: balance;
-        }
-    </style>
+  <link rel="stylesheet" href="../style.css" />
+  <script type="module" src="../global.js"></script>
+  <script type="module" src="projects.js" defer></script>
+
+  <style>
+    body {
+      max-width: 100ch;
+      padding: 1rem;
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    article {
+      border: 1px solid oklch(85% 5% 180);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      background: oklch(from var(--color-accent) 97% 3% h);
+    }
+
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.25rem;
+      margin-top: 0.5rem;
+    }
+
+    h2.projects-title {
+      border-bottom: 2px solid oklch(80% 3% 200);
+      padding-bottom: 0.25rem;
+      margin-top: 2rem;
+    }
+
+    p {
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 
-<body style="max-width: 100ch; padding: 1rem; margin-inline: auto;">
-    <h1>Projects Header</h1>
+<body>
+  <h1 class="projects-title">Projects</h1>
 
-    <div class="projects" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));">
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Lorem ipsum dolor sit.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid delectus blanditiis repellat accusamus quas nisi vero dignissimos.</p>
-        </article>
+  <p>
+    A collection of my personal, academic, and professional data science and analytics projects.
+    These are loaded dynamically from <code>projects.json</code>.
+  </p>
 
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Dolor neque officiis incidunt?</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Ea vero molestias voluptates quaerat numquam atque. Accusantium voluptas tempore assumenda, quod vel, molestiae corrupti soluta cupiditate accusamus atque in quas voluptate.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Iure dolorem delectus nisi.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Reprehenderit similique reiciendis voluptatibus nesciunt est, praesentium cupiditate? Recusandae ipsum molestiae laudantium suscipit voluptates at.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Pariatur facere beatae molestiae!</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Omnis doloremque nam harum dolore corrupti, reiciendis blanditiis recusandae distinctio exercitationem cumque beatae voluptatem modi ut laborum.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Quaerat quas voluptatum rem.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Quos, et officia! Fugit error sint tempora optio. Esse molestiae officia autem vitae officiis nobis incidunt voluptate aliquid ex neque facilis ab necessitatibus.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Deleniti quibusdam sed repellendus!</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Nisi illo laboriosam praesentium nihil totam consequuntur aperiam porro cupiditate. Voluptates reprehenderit nostrum id eveniet molestiae fugiat.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Odio veritatis minima dolor!</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Velit accusantium, placeat sapiente inventore deserunt tempore nihil aut itaque distinctio similique officia nobis fuga consequuntur earum harum.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Ratione reprehenderit obcaecati est.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Atque fugiat odio, molestias accusamus commodi sint laborum dolores perspiciatis, consectetur praesentium officia distinctio quibusdam nobis blanditiis et quidem dolor repellendus.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Commodi sunt at recusandae.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Minima error cum architecto at blanditiis! Quo soluta repellendus unde alias, aut a aspernatur consequatur commodi laboriosam pariatur eos cupiditate perspiciatis.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Neque expedita consequuntur laudantium.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Incidunt placeat obcaecati deleniti, beatae error, ex sit distinctio laudantium alias iste unde sunt reiciendis explicabo quaerat recusandae tenetur quae.</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Modi dignissimos laboriosam ducimus?</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Quo adipisci nemo laborum necessitatibus? Repellat commodi explicabo amet dicta, quia alias modi laborum, eum officiis ducimus, neque doloremque molestiae quis?</p>
-        </article>
-
-        <article style="grid-template-rows: subgrid; grid-row: span 3; padding: 10px;">
-            <h2 style="margin: 0;">Maiores praesentium illum dolore.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Incidunt illo quod, inventore non quo ipsum? Placeat esse, doloribus adipisci unde officia, neque explicabo quidem voluptatum assumenda quis nisi maxime reiciendis aspernatur.</p>
-        </article>
-    </div>
+  <!-- Dynamic container for all projects -->
+  <div class="projects">
+    <!-- JS from projects.js will populate this automatically -->
+  </div>
 </body>
 </html>
+
