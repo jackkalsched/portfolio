@@ -36,12 +36,14 @@ async function initProjectsPage() {
       .attr("stroke-width", 1);
 
     // Build legend
-    const legend = d3.select(".legend");
-    legend.selectAll("li")
-      .data(data)
-      .join("li")
-      .attr("style", (_, i) => `--color:${colors(i)}`)
-      .html((d) => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+    let legend = d3.select(".legend");
+    data.forEach((d, idx) => {
+      legend.selectAll("li")
+        .data(data)
+        .append("li")
+        .attr("style", (_, i) => `--color:${colors(i)}`)
+        .html((d) => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+    })
 
   } catch (err) {
     console.error("Error initializing projects page:", err);
