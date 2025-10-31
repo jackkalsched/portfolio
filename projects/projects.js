@@ -51,3 +51,4 @@ window.addEventListener("DOMContentLoaded", async () => {
     console.error("Error initializing projects page:", err);
   }
 });
+
