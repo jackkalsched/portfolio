@@ -28,7 +28,7 @@
     /* Step 2.3 – Pie + Legend side by side */
     .container {
       display: flex;
-      flex-wrap: wrap;              /* allows stacking on narrow screens */
+      flex-wrap: nowrap;              
       justify-content: center;
       align-items: center;
       gap: 2em;
@@ -52,7 +52,8 @@
       border: 1px solid oklch(80% 3% 200);
       border-radius: 0.5em;
       gap: 1em;
-      flex: 1;                      /* occupy remaining width beside pie */
+      flex: 1;
+      min-width: 12em;                      /* occupy remaining width beside pie */
     }
 
     .legend-item {
