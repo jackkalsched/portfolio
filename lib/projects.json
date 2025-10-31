@@ -6,10 +6,10 @@
       "description": "I created an optimal cutoff decision model for professional baseball using random forest models and expected run value formulas."
     },
     {
-      "title": "Dolor neque officiis incidunt?",
-      "year": "2024",
+      "title": "Pitch Classification Dashboard",
+      "year": "2025",
       "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Ea vero molestias voluptates quaerat numquam atque..."
+      "description": "Input pitch characteristics (Spin Rate, IVB, HB, VAA, etc.) and see what pitch comes out! Used unsupervised and supervised classification models."
     },
     {
       "title": "Iure dolorem delectus nisi.",

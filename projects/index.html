@@ -56,6 +56,14 @@
     p {
       margin-top: 0.5rem;
     }
+
+    #projects-pie-plot {
+      max-width: 20em;
+      margin-block: 2em;
+      overflow: visible;
+      display: block;
+      margin-inline: auto;
+    }
   </style>
 </head>
 
@@ -66,10 +74,11 @@
     A collection of my personal projects!
   </p>
 
-  <!-- Dynamic container for all projects -->
+  <svg id="projects-pie-plot" viewBox="-50 -50 100 100">
+    <path d="M -50 0 A 50 50 0 0 1 50 0 A 50 50 0 0 1 -50 0" fill="red" />
+  </svg>
+
   <div class="projects">
-    <!-- JS from projects.js will populate this automatically -->
   </div>
 </body>
 </html>
-

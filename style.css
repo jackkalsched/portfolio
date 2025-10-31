@@ -75,6 +75,13 @@ h4 { font-size: 1.2rem; }
   max-width: 100%;
 }
 
+.projects article {
+  border: 1px solid oklch(85% 2% 200);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: oklch(98% 1% 200 / 0.1);
+}
+
 .project-info {
   display: flex;
   flex-direction: column;
