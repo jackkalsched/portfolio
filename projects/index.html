@@ -85,18 +85,17 @@
         .innerRadius(0)
         .outerRadius(50);
 
-      let data = [1, 2];
+      let data = [1, 2, 3, 4, 5];
       let sliceGenerator = d3.pie();
       let arcData = sliceGenerator(data);
       let arcs = arcData.map((d) => arcGenerator(d));
 
-      // Step 3: Generate arcs and append them
-      const colors = ['gold', 'purple'];
+      let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
       arcData.forEach((d, idx) => {
         svg.append("path")
           .attr("d", arcGenerator(d))
-          .attr("fill", colors[idx % colors.length])
+          .attr("fill", colors(idx))
           .attr("stroke", "white")
           .attr("stroke-width", 1);
       });
