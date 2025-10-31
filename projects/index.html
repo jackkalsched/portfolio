@@ -74,9 +74,23 @@
     A collection of my personal projects!
   </p>
 
-  <svg id="projects-pie-plot" viewBox="-50 -50 100 100">
-    <path d="M -50 0 A 50 50 0 0 1 50 0 A 50 50 0 0 1 -50 0" fill="red" />
-  </svg>
+  <svg id="projects-pie-plot" viewBox="-50 -50 100 100"></svg>
+    <script type="module">
+
+      const arcGenerator = d3.arc()
+        .innerRadius(0)
+        .outerRadius(50);
+
+      let arc = d3.arc().innerRadius(0).outerRadius(50)({
+        startAngle: 0,
+        endAngle: 2 * Math.PI,
+      });
+
+      d3.select("#projects-pie-plot")
+        .append("path")
+        .attr("d", arc)
+        .attr("fill", "red");
+    </script>
 
   <div class="projects">
   </div>
