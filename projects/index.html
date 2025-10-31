@@ -77,19 +77,28 @@
   <svg id="projects-pie-plot" viewBox="-50 -50 100 100"></svg>
     <script type="module">
 
+      const svg = d3.select("#projects-pie-plot");
+
       const arcGenerator = d3.arc()
         .innerRadius(0)
         .outerRadius(50);
 
-      let arc = d3.arc().innerRadius(0).outerRadius(50)({
-        startAngle: 0,
-        endAngle: 2 * Math.PI,
+      let data = [1, 2];
+      let sliceGenerator = d3.pie();
+      let arcData = sliceGenerator(data);
+      let arcs = arcData.map((d) => arcGenerator(d));
+
+      // Step 3: Generate arcs and append them
+      const colors = ['gold', 'purple'];
+
+      arcData.forEach((d, idx) => {
+        svg.append("path")
+          .attr("d", arcGenerator(d))
+          .attr("fill", colors[idx % colors.length])
+          .attr("stroke", "white")
+          .attr("stroke-width", 1);
       });
 
-      d3.select("#projects-pie-plot")
-        .append("path")
-        .attr("d", arc)
-        .attr("fill", "red");
     </script>
 
   <div class="projects">
