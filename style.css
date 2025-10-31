@@ -68,33 +68,33 @@ h4 { font-size: 1.2rem; }
 
 /* ---------- PROJECTS GRID ---------- */
 .legend {
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
   list-style: none;
-  padding: 0.5em 1em;
+  padding: 0;
   margin: 1em auto;
-  max-width: fit-content; 
-  display: flex;         
-  flex-wrap: wrap;        
-  justify-content: center;
-  gap: 1em;               
-  border: 1px solid oklch(80% 3% 200); 
-  border-radius: 0.5em;
-  background-color: oklch(from var(--color-accent) 98% 0.02 200 / 0.1);
+  max-width: 35em;
+  gap: 1em; 
 }
 
-.legend li {
-  display: flex;
+
+.legend-item {
+  display: flex;             
   align-items: center;
-  gap: 0.4em;
+  gap: 0.5em;         
   font-size: 0.95rem;
 }
 
+
 .legend .swatch {
+  display: inline-block;     
   width: 1em;
-  height: 1em;
-  border-radius: 0.2em;
+  aspect-ratio: 1 / 1;
   background-color: var(--color);
-  border: 1px solid oklch(70% 2% 200 / 0.3);
+  border-radius: 0.25em; 
+  border: 1px solid oklch(70% 2% 200 / 0.3); 
 }
+
 
 
 .projects {
