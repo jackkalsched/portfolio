@@ -3,12 +3,12 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    // --- Project grid ---
+    // --- Load and render project grid ---
     const projects = await fetchJSON("../lib/projects.json");
     const container = document.querySelector(".projects");
     renderProjects(projects, container, "h2");
 
-    // --- Step 2.1: Labeled data ---
+    // --- STEP 2.1: Data with labels ---
     const data = [
       { value: 1, label: "apples" },
       { value: 2, label: "oranges" },
@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       .attr("stroke", "white")
       .attr("stroke-width", 1);
 
-    // --- Step 2.2: Build legend ---
+    // --- STEP 2.2: Build legend ---
     const legend = d3.select(".legend");
     legend.selectAll("li")
       .data(data)
