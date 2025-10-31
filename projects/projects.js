@@ -3,26 +3,30 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    // --- Load and render project grid ---
+    // --- Load and render all projects on the page ---
     const projects = await fetchJSON("../lib/projects.json");
     const container = document.querySelector(".projects");
     renderProjects(projects, container, "h2");
 
-    // --- STEP 3.1: Aggregate projects per year ---
-    // Group by year and count how many projects per year
+    // ✅ Check that we actually have project data
+    console.log("Loaded projects:", projects);
+
+    // --- STEP 3.1: Aggregate projects per year using d3.rollups ---
     const rolledData = d3.rollups(
       projects,
-      (v) => v.length,      // counts per year
-      (d) => d.year         // key = year
+      (v) => v.length,   // count of projects per year
+      (d) => d.year      // key = year
     );
 
-    // Convert to array of objects expected by D3 pie
+    // Convert rollup format → array of { label, value } objects
     const data = rolledData.map(([year, count]) => ({
+      label: year,
       value: count,
-      label: year
     }));
 
-    // --- Pie setup ---
+    console.log("Aggregated data for pie chart:", data);
+
+    // --- D3 PIE SETUP ---
     const svg = d3.select("#projects-pie-plot");
     const arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
     const sliceGenerator = d3.pie().value((d) => d.value);
@@ -38,7 +42,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       .attr("stroke", "white")
       .attr("stroke-width", 1);
 
-    // --- Build legend ---
+    // --- Build legend dynamically from data ---
     const legend = d3.select(".legend");
     legend.selectAll("li")
       .data(data)
@@ -51,4 +55,3 @@ window.addEventListener("DOMContentLoaded", async () => {
     console.error("Error initializing projects page:", err);
   }
 });
-
