@@ -7,7 +7,6 @@
 
   <link rel="stylesheet" href="../style.css" />
 
-  <script type="module" src="../global.js"></script>
   <script type="module" src="projects.js" defer></script>
 
   <style>
@@ -74,10 +73,11 @@
       max-width: 20em;
       display: grid;
       gap: 0.5em;
+      grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
     }
 
     .legend li {
-      display: flex;
+      display: grid;
       align-items: center;
       gap: 0.5em;
     }
