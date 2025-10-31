@@ -6,8 +6,7 @@
   <title>Projects | Jack Kalsched</title>
 
   <link rel="stylesheet" href="../style.css" />
-
-  <script type="module" src="projects.js" defer></script>
+  <script type="module" src="projects.js"></script>
 
   <style>
     body {
@@ -26,79 +25,63 @@
       text-wrap: balance;
     }
 
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
+    /* Step 2.3 – Pie + Legend side by side */
+    .container {
+      display: flex;
+      flex-wrap: wrap;              /* allows stacking on narrow screens */
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
+      margin-block: 2em;
     }
 
-    article {
-      border: 1px solid oklch(85% 5% 180);
-      border-radius: 0.5rem;
-      padding: 1rem;
-    }
-
-    article img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 0.25rem;
-      margin-top: 0.5rem;
-    }
-
-    h2.projects-title {
-      border-bottom: 2px solid oklch(80% 3% 200);
-      padding-bottom: 0.25rem;
-      margin-top: 2rem;
-    }
-
-    p {
-      margin-top: 0.5rem;
-    }
-
-    /* Pie chart container */
+    /* Pie chart sizing */
     #projects-pie-plot {
       max-width: 20em;
-      margin-block: 2em;
       overflow: visible;
-      display: block;
-      margin-inline: auto;
+      flex: 0 0 auto;
     }
 
+    /* Legend styling (Step 2.2) */
     .legend {
-      list-style: none;
-      padding: 0;
-      margin: 0 auto;
-      max-width: 20em;
       display: grid;
-      gap: 0.5em;
       grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+      list-style: none;
+      padding: 1em;
+      margin: 0;
+      border: 1px solid oklch(80% 3% 200);
+      border-radius: 0.5em;
+      gap: 1em;
+      flex: 1;                      /* occupy remaining width beside pie */
     }
 
-    .legend li {
-      display: grid;
+    .legend-item {
+      display: flex;                /* swatch + text inline */
       align-items: center;
-      gap: 0.5em;
+      gap: 0.5em;                   /* smaller internal gap (Proximity) */
+      font-size: 0.95rem;
     }
 
     .legend .swatch {
+      display: inline-block;        /* allows width + height */
       width: 1em;
-      height: 1em;
-      border-radius: 0.25em;
+      aspect-ratio: 1 / 1;
       background-color: var(--color);
+      border-radius: 0.25em;        /* 50% = circle if preferred */
+      border: 1px solid oklch(70% 2% 200 / 0.3);
     }
   </style>
 </head>
 
 <body>
   <h1 class="projects-title">Projects</h1>
-
   <p>A collection of my personal projects!</p>
 
-  <svg id="projects-pie-plot" viewBox="-50 -50 100 100"></svg>
-
-  <ul class="legend"></ul>
+  <!-- Step 2.3 container -->
+  <div class="container">
+    <svg id="projects-pie-plot" viewBox="-50 -50 100 100"></svg>
+    <ul class="legend"></ul>
+  </div>
 
   <div class="projects"></div>
 </body>

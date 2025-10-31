@@ -1,17 +1,14 @@
 import { fetchJSON, renderProjects } from "../global.js";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
-// Wait for DOM to be ready
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    // --- Load and render project grid ---
+    // --- Project grid ---
     const projects = await fetchJSON("../lib/projects.json");
     const container = document.querySelector(".projects");
     renderProjects(projects, container, "h2");
 
-    // --- D3 PIE CHART + LEGEND ---
-    const svg = d3.select("#projects-pie-plot");
-
+    // --- Step 2.1: Labeled data ---
     const data = [
       { value: 1, label: "apples" },
       { value: 2, label: "oranges" },
@@ -21,6 +18,8 @@ window.addEventListener("DOMContentLoaded", async () => {
       { value: 6, label: "cherries" },
     ];
 
+    // --- Pie setup ---
+    const svg = d3.select("#projects-pie-plot");
     const arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
     const sliceGenerator = d3.pie().value((d) => d.value);
     const arcData = sliceGenerator(data);
@@ -35,13 +34,13 @@ window.addEventListener("DOMContentLoaded", async () => {
       .attr("stroke", "white")
       .attr("stroke-width", 1);
 
-    // --- Build legend ---
+    // --- Step 2.2: Build legend ---
     const legend = d3.select(".legend");
     legend.selectAll("li")
       .data(data)
       .join("li")
-      .attr("class", "legend-item")                       // for styling
-      .attr("style", (_, i) => `--color:${colors(i)}`)    // color variable
+      .attr("class", "legend-item")
+      .attr("style", (_, i) => `--color:${colors(i)}`)
       .html((d) => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
 
   } catch (err) {
