@@ -1,4 +1,3 @@
-// projects.js
 import { fetchJSON, renderProjects } from "../global.js";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
@@ -26,7 +25,6 @@ async function initProjectsPage() {
     const arcData = sliceGenerator(data);
     const colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-    // Draw pie slices
     svg.selectAll("path")
       .data(arcData)
       .join("path")
@@ -35,9 +33,7 @@ async function initProjectsPage() {
       .attr("stroke", "white")
       .attr("stroke-width", 1);
 
-    // Build legend
     const legend = d3.select(".legend");
-
     legend.selectAll("li")
       .data(data)
       .join("li")
@@ -50,4 +46,3 @@ async function initProjectsPage() {
 }
 
 document.addEventListener("DOMContentLoaded", initProjectsPage);
-;
