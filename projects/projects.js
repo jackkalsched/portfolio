@@ -3,20 +3,24 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    // --- Project grid ---
+    // --- Load and render project grid ---
     const projects = await fetchJSON("../lib/projects.json");
     const container = document.querySelector(".projects");
     renderProjects(projects, container, "h2");
 
-    // --- Step 2.1: Labeled data ---
-    const data = [
-      { value: 1, label: "apples" },
-      { value: 2, label: "oranges" },
-      { value: 3, label: "mangos" },
-      { value: 4, label: "pears" },
-      { value: 5, label: "limes" },
-      { value: 6, label: "cherries" },
-    ];
+    // --- STEP 3.1: Aggregate projects per year ---
+    // Group by year and count how many projects per year
+    const rolledData = d3.rollups(
+      projects,
+      (v) => v.length,      // counts per year
+      (d) => d.year         // key = year
+    );
+
+    // Convert to array of objects expected by D3 pie
+    const data = rolledData.map(([year, count]) => ({
+      value: count,
+      label: year
+    }));
 
     // --- Pie setup ---
     const svg = d3.select("#projects-pie-plot");
@@ -34,7 +38,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       .attr("stroke", "white")
       .attr("stroke-width", 1);
 
-    // --- Step 2.2: Build legend ---
+    // --- Build legend ---
     const legend = d3.select(".legend");
     legend.selectAll("li")
       .data(data)
