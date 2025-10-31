@@ -110,10 +110,14 @@ export function renderProjects(projects, containerElement, headingLevel = "h2") 
     article.innerHTML = `
       <${headingLevel}>${project.title ?? "Untitled Project"}</${headingLevel}>
       <img src="${project.image ?? ""}" alt="${project.title ?? ""}">
-      <p>${project.description ?? ""}</p>
+      <div class="project-info">
+        <p>${project.description ?? ""}</p>
+        <p class="project-year">${project.year ?? ""}</p>
+      </div>
     `;
     containerElement.appendChild(article);
   }
+  
 
   // optional project count at top of page
   const titleEl = document.querySelector(".projects-title");
