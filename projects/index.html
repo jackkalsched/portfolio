@@ -6,6 +6,7 @@
   <title>Projects | Jack Kalsched</title>
 
   <link rel="stylesheet" href="../style.css" />
+
   <script type="module" src="../global.js"></script>
   <script type="module" src="projects.js" defer></script>
 
@@ -57,6 +58,7 @@
       margin-top: 0.5rem;
     }
 
+    /* Pie chart container */
     #projects-pie-plot {
       max-width: 20em;
       margin-block: 2em;
@@ -64,55 +66,40 @@
       display: block;
       margin-inline: auto;
     }
+
+    .legend {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 20em;
+      display: grid;
+      gap: 0.5em;
+    }
+
+    .legend li {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    .legend .swatch {
+      width: 1em;
+      height: 1em;
+      border-radius: 0.25em;
+      background-color: var(--color);
+    }
   </style>
 </head>
 
 <body>
   <h1 class="projects-title">Projects</h1>
 
-  <p>
-    A collection of my personal projects!
-  </p>
+  <p>A collection of my personal projects!</p>
 
   <svg id="projects-pie-plot" viewBox="-50 -50 100 100"></svg>
+
   <ul class="legend"></ul>
 
-
-    <script type="module">
-      import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-
-      const svg = d3.select("#projects-pie-plot");
-
-      const arcGenerator = d3.arc()
-        .innerRadius(0)
-        .outerRadius(50);
-
-      let data = [
-        { value: 1, label: 'apples' },
-        { value: 2, label: 'oranges' },
-        { value: 3, label: 'mangos' },
-        { value: 4, label: 'pears' },
-        { value: 5, label: 'limes' },
-        { value: 5, label: 'cherries' },
-      ];
-
-      let sliceGenerator = d3.pie().value((d) => d.value);
-      let arcData = sliceGenerator(data);
-      let arcs = arcData.map((d) => arcGenerator(d));
-
-      let colors = d3.scaleOrdinal(d3.schemeTableau10);
-
-      arcData.forEach((d, idx) => {
-        svg.append("path")
-          .attr("d", arcGenerator(d))
-          .attr("fill", colors(idx))
-          .attr("stroke", "white")
-          .attr("stroke-width", 1);
-      });
-
-    </script>
-
-  <div class="projects">
-  </div>
+  <div class="projects"></div>
 </body>
 </html>
