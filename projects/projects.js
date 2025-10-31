@@ -51,6 +51,22 @@ window.addEventListener("DOMContentLoaded", async () => {
       .attr("style", (_, i) => `--color:${colors(i)}`)
       .html((d) => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
 
+    renderChart(projects);
+
+    let query = "";
+    const searchInput = document.querySelector(".searchBar");
+
+    searchInput.addEventListener("input", (event) => {
+      query = event.target.value.toLowerCase();
+
+      const filteredProjects = projects.filter((project) =>
+        project.title.toLowerCase().includes(query)
+      );
+
+      renderProjects(filteredProjects, container, "h2");
+      renderChart(filteredProjects);
+    });
+
   } catch (err) {
     console.error("Error initializing projects page:", err);
   }
