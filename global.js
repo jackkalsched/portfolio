@@ -1,6 +1,6 @@
 console.log("IT’S ALIVE!");
 
-// ---------- HELPER SELECTORS ----------
+
 export function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
 }
@@ -8,13 +8,13 @@ export function $(selector, context = document) {
   return context.querySelector(selector);
 }
 
-// ---------- BASE PATH FOR LINKS ----------
+
 const BASE_PATH =
   location.hostname === "localhost" || location.hostname === "127.0.0.1"
     ? "/"
     : "/portfolio/";
 
-// ---------- PAGES NAV ----------
+
 const pages = [
   { url: "index.html", title: "Home Page" },
   { url: "projects/", title: "Projects" },
@@ -43,7 +43,7 @@ for (const p of pages) {
   nav.append(a);
 }
 
-// ---------- DARK MODE SWITCH ----------
+
 document.body.insertAdjacentHTML(
   "afterbegin",
   `
@@ -77,7 +77,7 @@ select.addEventListener("input", (event) => {
   console.log("Color scheme changed to", value);
 });
 
-// ---------- FETCH JSON ----------
+
 export async function fetchJSON(url) {
   try {
     const response = await fetch(url);
@@ -92,7 +92,7 @@ export async function fetchJSON(url) {
   }
 }
 
-// ---------- RENDER PROJECTS ----------
+
 export function renderProjects(projects, containerElement, headingLevel = "h2") {
   if (!containerElement) {
     console.error("Invalid container element for renderProjects");
@@ -119,14 +119,14 @@ export function renderProjects(projects, containerElement, headingLevel = "h2") 
   }
   
 
-  // optional project count at top of page
+  
   const titleEl = document.querySelector(".projects-title");
   if (titleEl) {
     titleEl.textContent = `Projects (${projects.length})`;
   }
 }
 
-// ---------- GITHUB DATA ----------
+
 export async function fetchGitHubData(username) {
   return fetchJSON(`https://api.github.com/users/${username}`);
 }

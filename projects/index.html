@@ -20,7 +20,6 @@
       margin-bottom: 1rem;
     }
 
-    /* === PIE + LEGEND CONTAINER STYLES (unchanged) === */
     .container {
       display: flex;
       flex-wrap: nowrap;
@@ -63,17 +62,16 @@
       display: inline-block;
     }
 
-    /* === Step 5.1: Hover effect === */
+
     svg:has(path:hover) path:not(:hover) {
       opacity: 0.5;
     }
 
     path {
       transition: 300ms;
-      cursor: pointer; /* Step 5.2 UX hint */
+      cursor: pointer; 
     }
 
-    /* === Step 5.2: Selected wedge & legend styling === */
     .selected {
       --color: oklch(60% 45% 0) !important;
     }
@@ -85,7 +83,6 @@
       background-color: var(--color);
     }
 
-    /* Search bar */
     .searchBar {
       display: block;
       margin: 1em auto 2em;

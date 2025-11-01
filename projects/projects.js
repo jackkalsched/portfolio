@@ -10,21 +10,21 @@ window.addEventListener("DOMContentLoaded", async () => {
     renderProjects(projects, projectsContainer, "h2");
 
     let selectedIndex = -1;
-    let query = ""; // ✅ Step 5.4 prep: track search term globally
+    let query = ""; 
 
-    // --- Step 5.3: Helper function to combine filters ---
+
     function getFilteredProjects() {
-      // Start from all projects
+
       let filtered = projects;
 
-      // Filter by search
+
       if (query) {
         filtered = filtered.filter((p) =>
           p.title.toLowerCase().includes(query)
         );
       }
 
-      // Filter by selected wedge (year)
+
       if (selectedIndex !== -1 && currentData[selectedIndex]) {
         const yearSelected = currentData[selectedIndex].label;
         filtered = filtered.filter((p) => p.year === yearSelected);
@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       return filtered;
     }
 
-    let currentData = []; // Store latest pie data for reference
+    let currentData = []; 
 
     function renderPieChart(projectsGiven) {
       const svg = d3.select("#projects-pie-plot");
@@ -51,7 +51,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         label: year,
         value: count,
       }));
-      currentData = data; // ✅ track for later use in filter logic
+      currentData = data;
 
       if (data.length === 0) return;
 
@@ -60,7 +60,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       const arcData = sliceGenerator(data);
       const colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-      // --- Draw wedges ---
+      
       const paths = svg
         .selectAll("path")
         .data(arcData)
@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", async () => {
           const idx = arcData.indexOf(d);
           selectedIndex = selectedIndex === idx ? -1 : idx;
 
-          // ✅ Update visuals
+          
           svg.selectAll("path").attr("class", (_, j) =>
             j === selectedIndex ? "selected" : null
           );
@@ -82,12 +82,12 @@ window.addEventListener("DOMContentLoaded", async () => {
             j === selectedIndex ? "legend-item selected" : "legend-item"
           );
 
-          // ✅ Apply filters and re-render projects based on search + year
+          
           const filtered = getFilteredProjects();
           renderProjects(filtered, projectsContainer, "h2");
         });
 
-      // --- Draw legend ---
+      
       legend
         .selectAll("li")
         .data(data)
@@ -115,14 +115,14 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // ✅ Initial render
+    
     renderPieChart(projects);
 
-    // --- Step 5.4: Combined reactive search ---
+    
     searchInput.addEventListener("input", (event) => {
       query = event.target.value.toLowerCase();
 
-      // Always filter both search + wedge
+      
       const filteredProjects = getFilteredProjects();
 
       renderProjects(filteredProjects, projectsContainer, "h2");
