@@ -52,23 +52,22 @@ function renderCommitInfo(data, commits) {
   // Create the dl element
   const dl = d3.select('#stats').append('dl').attr('class', 'stats');
 
-  // Add total LOC
-  dl.append('dt').html('Total <abbr title="Lines of code">LOC</abbr>');
-  dl.append('dd').text(data.length);
+  // Helper function to add a metric
+  const addMetric = (label, value) => {
+    const div = dl.append('div').attr('class', 'stat-item');
+    div.append('dt').html(label);
+    div.append('dd').html(value);
+  };
 
   // Add total commits
-  dl.append('dt').text('Total commits');
-  dl.append('dd').text(commits.length);
+  addMetric('Total Commits', commits.length);
+
+  // Add total LOC
+  addMetric('Total <abbr title="Lines of code">LOC</abbr>', data.length);
 
   // Number of files in the codebase
   const numFiles = d3.group(data, (d) => d.file).size;
-  dl.append('dt').text('Number of files');
-  dl.append('dd').text(numFiles);
-
-  // Average line length (in characters)
-  const avgLineLength = d3.mean(data, (d) => d.length);
-  dl.append('dt').text('Average line length');
-  dl.append('dd').text(Math.round(avgLineLength) + ' chars');
+  addMetric('Number of Files', numFiles);
 
   // Longest file (by number of lines)
   const fileLengths = d3.rollups(
@@ -79,8 +78,7 @@ function renderCommitInfo(data, commits) {
   const longestFileEntry = d3.greatest(fileLengths, (d) => d[1]);
   const longestFileName = longestFileEntry ? longestFileEntry[0] : 'N/A';
   const longestFileLines = longestFileEntry ? longestFileEntry[1] : 0;
-  dl.append('dt').text('Longest file');
-  dl.append('dd').html(`<code>${longestFileName}</code> (${longestFileLines} lines)`);
+  addMetric('Longest File', `<code>${longestFileName}</code> (${longestFileLines} lines)`);
 
   // Time of day that most work is done
   const workByPeriod = d3.rollups(
@@ -96,8 +94,7 @@ function renderCommitInfo(data, commits) {
   );
   const maxPeriod = d3.greatest(workByPeriod, (d) => d[1]);
   const mostWorkPeriod = maxPeriod ? maxPeriod[0] : 'N/A';
-  dl.append('dt').text('Most productive time');
-  dl.append('dd').text(mostWorkPeriod);
+  addMetric('Most Productive Time of Day', mostWorkPeriod);
 }
 
 let data = await loadData();

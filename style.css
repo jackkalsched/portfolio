@@ -157,7 +157,7 @@ img {
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
-  gap: 0.5rem 1rem;
+  gap: 1rem;
   text-align: center;
   margin-top: 1rem;
   padding: 1rem;
@@ -165,8 +165,14 @@ img {
   border-radius: 0.5rem;
 }
 
+.stats .stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
 .stats dt {
   font-weight: bold;
+  margin-bottom: 0.25rem;
 }
 
 .stats dd {
