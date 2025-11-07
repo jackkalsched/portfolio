@@ -52,12 +52,12 @@ function renderCommitInfo(data, commits) {
   // Create the dl element
   const dl = d3.select('#stats').append('dl').attr('class', 'stats');
 
-  // Helper function to add a metric
-  const addMetric = (label, value) => {
+  // Helper to add a metric with dt and dd
+  function addMetric(label, value) {
     const div = dl.append('div').attr('class', 'stat-item');
     div.append('dt').html(label);
     div.append('dd').html(value);
-  };
+  }
 
   // Add total commits
   addMetric('Total Commits', commits.length);
