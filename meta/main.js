@@ -98,6 +98,12 @@ function renderCommitInfo(data, commits) {
 }
 
 function renderScatterPlot(data, commits) {
+  // Check if we have commits data
+  if (!commits || commits.length === 0) {
+    console.error('No commits data available for scatter plot');
+    return;
+  }
+
   // Define dimensions
   const width = 1000;
   const height = 600;
@@ -106,6 +112,8 @@ function renderScatterPlot(data, commits) {
   const svg = d3
     .select('#chart')
     .append('svg')
+    .attr('width', width)
+    .attr('height', height)
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
 
@@ -119,7 +127,7 @@ function renderScatterPlot(data, commits) {
   const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
 
   // Define margins
-  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+  const margin = { top: 10, right: 10, bottom: 30, left: 50 };
 
   // Define usable area
   const usableArea = {
