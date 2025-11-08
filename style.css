@@ -178,3 +178,15 @@ img {
 .stats dd {
   margin: 0;
 }
+
+/* META */
+
+.gridlines line {
+  stroke: #ccc;       
+  stroke-opacity: 0.5;
+  shape-rendering: crispEdges;
+}
+
+.gridlines path {
+  stroke-width: 0;   
+}

@@ -109,7 +109,6 @@ function renderCommitInfo(data, commits) {
 // Render scatter plot
 // ---------------------------
 function renderScatterPlot(data, commits) {
-  // Check if we have commits data
   if (!commits || commits.length === 0) {
     console.error('No commits data available for scatter plot');
     return;
@@ -135,10 +134,8 @@ function renderScatterPlot(data, commits) {
 
   const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
 
-  // Define margins for axes
+  // Define margins and usable area
   const margin = { top: 10, right: 10, bottom: 30, left: 20 };
-
-  // Define usable plotting area (accounting for margins)
   const usableArea = {
     top: margin.top,
     right: width - margin.right,
@@ -148,29 +145,48 @@ function renderScatterPlot(data, commits) {
     height: height - margin.top - margin.bottom,
   };
 
-  // Update scale ranges based on usable area
+  // Update scale ranges
   xScale.range([usableArea.left, usableArea.right]);
   yScale.range([usableArea.bottom, usableArea.top]);
 
-  // Create the axes
+  // -----------------------
+  // Step 2.3: Add gridlines
+  // -----------------------
+
+  // Add gridlines BEFORE axes (so they appear behind)
+  const gridlines = svg
+    .append('g')
+    .attr('class', 'gridlines')
+    .attr('transform', `translate(${usableArea.left}, 0)`);
+
+  // Create gridlines as an axis with no labels and full-width ticks
+  gridlines.call(
+    d3.axisLeft(yScale)
+      .tickFormat('')
+      .tickSize(-usableArea.width)
+  );
+
+  // -----------------------
+  // Axes
+  // -----------------------
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3
     .axisLeft(yScale)
-    .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00'); // format hours
+    .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00');
 
-  // Add X axis
   svg
     .append('g')
     .attr('transform', `translate(0, ${usableArea.bottom})`)
     .call(xAxis);
 
-  // Add Y axis
   svg
     .append('g')
     .attr('transform', `translate(${usableArea.left}, 0)`)
     .call(yAxis);
 
-  // Draw the scatterplot dots *after* the axes are created
+  // -----------------------
+  // Scatterplot dots
+  // -----------------------
   const dots = svg.append('g').attr('class', 'dots');
 
   dots
@@ -183,6 +199,7 @@ function renderScatterPlot(data, commits) {
     .attr('fill', 'steelblue')
     .attr('opacity', 0.8);
 }
+
 
 
 // ---------------------------
