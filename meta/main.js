@@ -154,17 +154,26 @@ function renderScatterPlot(data, commits) {
   // -----------------------
 
   // Add gridlines BEFORE axes (so they appear behind)
-  const gridlines = svg
-    .append('g')
-    .attr('class', 'gridlines')
-    .attr('transform', `translate(${usableArea.left}, 0)`);
+  const hours = d3.range(0, 25, 2); // every 2 hours
+  const colorScale = d3
+    .scaleLinear()
+    .domain([0, 6, 12, 18, 24])
+    .range(['#003f5c', '#2f4b7c', '#ffa600', '#ff7c43', '#003f5c']); // night → day → night
 
-  // Create gridlines as an axis with no labels and full-width ticks
-  gridlines.call(
-    d3.axisLeft(yScale)
-      .tickFormat('')
-      .tickSize(-usableArea.width)
-  );
+  svg
+    .append('g')
+    .attr('class', 'gridlines-colored')
+    .selectAll('line')
+    .data(hours)
+    .join('line')
+    .attr('x1', usableArea.left)
+    .attr('x2', usableArea.right)
+    .attr('y1', (d) => yScale(d))
+    .attr('y2', (d) => yScale(d))
+    .attr('stroke', (d) => colorScale(d))
+    .attr('stroke-opacity', 0.3)
+    .attr('stroke-width', 1);
+
 
   // -----------------------
   // Axes
