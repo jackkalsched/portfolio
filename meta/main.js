@@ -109,45 +109,71 @@ function renderCommitInfo(data, commits) {
 // Render scatter plot
 // ---------------------------
 function renderScatterPlot(data, commits) {
+  // Check if we have commits data
   if (!commits || commits.length === 0) {
     console.error('No commits data available for scatter plot');
     return;
   }
 
+  // Define overall dimensions
   const width = 1000;
   const height = 600;
-  const margin = { top: 20, right: 30, bottom: 50, left: 60 };
 
+  // Create the SVG container
   const svg = d3
     .select('#chart')
     .append('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
 
+  // Create scales
   const xScale = d3
     .scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
-    .range([margin.left, width - margin.right])
+    .range([0, width])
     .nice();
 
-  const yScale = d3.scaleLinear().domain([0, 24]).range([height - margin.bottom, margin.top]);
+  const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
 
+  // Define margins for axes
+  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+
+  // Define usable plotting area (accounting for margins)
+  const usableArea = {
+    top: margin.top,
+    right: width - margin.right,
+    bottom: height - margin.bottom,
+    left: margin.left,
+    width: width - margin.left - margin.right,
+    height: height - margin.top - margin.bottom,
+  };
+
+  // Update scale ranges based on usable area
+  xScale.range([usableArea.left, usableArea.right]);
+  yScale.range([usableArea.bottom, usableArea.top]);
+
+  // Create the axes
   const xAxis = d3.axisBottom(xScale);
-  const yAxis = d3.axisLeft(yScale).tickFormat((d) => `${String(d).padStart(2, '0')}:00`);
+  const yAxis = d3
+    .axisLeft(yScale)
+    .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00'); // format hours
 
+  // Add X axis
   svg
     .append('g')
-    .attr('transform', `translate(0,${height - margin.bottom})`)
+    .attr('transform', `translate(0, ${usableArea.bottom})`)
     .call(xAxis);
 
+  // Add Y axis
   svg
     .append('g')
-    .attr('transform', `translate(${margin.left},0)`)
+    .attr('transform', `translate(${usableArea.left}, 0)`)
     .call(yAxis);
 
-  svg
-    .append('g')
-    .attr('class', 'dots')
+  // Draw the scatterplot dots *after* the axes are created
+  const dots = svg.append('g').attr('class', 'dots');
+
+  dots
     .selectAll('circle')
     .data(commits)
     .join('circle')
@@ -156,23 +182,8 @@ function renderScatterPlot(data, commits) {
     .attr('r', 5)
     .attr('fill', 'steelblue')
     .attr('opacity', 0.8);
-
-  // Axis labels
-  svg
-    .append('text')
-    .attr('x', width / 2)
-    .attr('y', height - 10)
-    .attr('text-anchor', 'middle')
-    .text('Date');
-
-  svg
-    .append('text')
-    .attr('x', -height / 2)
-    .attr('y', 15)
-    .attr('transform', 'rotate(-90)')
-    .attr('text-anchor', 'middle')
-    .text('Time of Day');
 }
+
 
 // ---------------------------
 // Load, process, and render
