@@ -161,7 +161,6 @@ img {
   text-align: center;
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid oklch(80% 3% 200);
   border-radius: 0.5rem;
 }
 
@@ -189,4 +188,48 @@ img {
 
 .gridlines path {
   stroke-width: 0;   
+}
+
+/* ---------- TOOLTIP STYLES ---------- */
+
+dl.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: oklch(98% 1% 200 / 0.6);
+  border-radius: 0.5rem;
+  font-family: system-ui, sans-serif;
+}
+
+dl.info dt {
+  color: #555;
+  font-weight: 500;
+  margin: 0;
+}
+
+dl.info dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  z-index: 10;
+  opacity: 0.8;
+}
+
+/* ---------- DOT HOVER EFFECTS ---------- */
+
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
 }

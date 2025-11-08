@@ -4,8 +4,7 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 // Load CSV data
 // ---------------------------
 async function loadData() {
-  // Try parsing datetime robustly using d3.timeParse
-  const parseDateTime = d3.timeParse('%Y-%m-%d %H:%M:%S'); // adjust if needed
+  const parseDateTime = d3.timeParse('%Y-%m-%d %H:%M:%S');
 
   const data = await d3.csv('loc.csv', (row) => {
     const parsedDateTime = parseDateTime(row.datetime) || new Date(row.datetime);
@@ -29,40 +28,68 @@ async function loadData() {
 function processCommits(data) {
   if (!data || data.length === 0) return [];
 
-  // Ensure we’re grouping by the correct column
   const commitKey = 'commit' in data[0] ? 'commit' : 'commit_hash';
-
   const grouped = d3.groups(data, (d) => d[commitKey]);
 
-  return grouped.map(([commit, lines]) => {
-    const first = lines[0];
-    const { author, date, time, timezone, datetime } = first;
+  return grouped
+    .map(([commit, lines]) => {
+      const first = lines[0];
+      const { author, date, time, timezone, datetime } = first;
 
-    const ret = {
-      id: commit,
-      url: 'https://github.com/jackkalsched/portfolio/commit/' + commit,
-      author,
-      date,
-      time,
-      timezone,
-      datetime,
-      hourFrac: datetime instanceof Date ? datetime.getHours() + datetime.getMinutes() / 60 : null,
-      totalLines: lines.length,
-    };
+      const ret = {
+        id: commit,
+        url: 'https://github.com/jackkalsched/portfolio/commit/' + commit,
+        author,
+        date,
+        time,
+        timezone,
+        datetime,
+        hourFrac:
+          datetime instanceof Date ? datetime.getHours() + datetime.getMinutes() / 60 : null,
+        totalLines: lines.length,
+      };
 
-    Object.defineProperty(ret, 'lines', {
-      value: lines,
-      configurable: true,
-      writable: false,
-      enumerable: false,
-    });
+      Object.defineProperty(ret, 'lines', {
+        value: lines,
+        configurable: true,
+        writable: false,
+        enumerable: false,
+      });
 
-    return ret;
-  }).filter((d) => d.datetime instanceof Date && !isNaN(d.datetime));
+      return ret;
+    })
+    .filter((d) => d.datetime instanceof Date && !isNaN(d.datetime));
 }
 
 // ---------------------------
-// Render commit statistics
+// Tooltip content updater
+// ---------------------------
+function renderTooltipContent(commit) {
+  const link = document.getElementById('commit-link');
+  const date = document.getElementById('commit-date');
+  const time = document.getElementById('commit-time');
+  const author = document.getElementById('commit-author');
+  const lines = document.getElementById('commit-lines');
+
+  if (!commit || Object.keys(commit).length === 0) return;
+
+  link.href = commit.url;
+  link.textContent = commit.id;
+
+  if (commit.datetime instanceof Date && !isNaN(commit.datetime)) {
+    date.textContent = commit.datetime.toLocaleDateString('en', { dateStyle: 'full' });
+    time.textContent = commit.datetime.toLocaleTimeString('en', { timeStyle: 'short' });
+  } else {
+    date.textContent = 'Unknown date';
+    time.textContent = '';
+  }
+
+  author.textContent = commit.author || 'Unknown';
+  lines.textContent = commit.totalLines || 0;
+}
+
+// ---------------------------
+// Render commit summary stats
 // ---------------------------
 function renderCommitInfo(data, commits) {
   const dl = d3.select('#stats').append('dl').attr('class', 'stats');
@@ -114,18 +141,15 @@ function renderScatterPlot(data, commits) {
     return;
   }
 
-  // Define overall dimensions
   const width = 1000;
   const height = 600;
 
-  // Create the SVG container
   const svg = d3
     .select('#chart')
     .append('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
 
-  // Create scales
   const xScale = d3
     .scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
@@ -134,7 +158,6 @@ function renderScatterPlot(data, commits) {
 
   const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
 
-  // Define margins and usable area
   const margin = { top: 10, right: 10, bottom: 30, left: 20 };
   const usableArea = {
     top: margin.top,
@@ -145,30 +168,20 @@ function renderScatterPlot(data, commits) {
     height: height - margin.top - margin.bottom,
   };
 
-  // Update scale ranges
+  // Update ranges
   xScale.range([usableArea.left, usableArea.right]);
   yScale.range([usableArea.bottom, usableArea.top]);
 
-  // -----------------------
-  // Step 2.3: Add gridlines
-  // -----------------------
-
-  // Add gridlines BEFORE axes (so they appear behind)
+  // --- Gridlines (behind axes)
   const gridlines = svg
     .append('g')
     .attr('class', 'gridlines')
     .attr('transform', `translate(${usableArea.left}, 0)`);
-
-  // Create gridlines as an axis with no labels and full-width ticks
   gridlines.call(
-    d3.axisLeft(yScale)
-      .tickFormat('')
-      .tickSize(-usableArea.width)
+    d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width)
   );
 
-  // -----------------------
-  // Axes
-  // -----------------------
+  // --- Axes
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3
     .axisLeft(yScale)
@@ -184,9 +197,7 @@ function renderScatterPlot(data, commits) {
     .attr('transform', `translate(${usableArea.left}, 0)`)
     .call(yAxis);
 
-  // -----------------------
-  // Scatterplot dots
-  // -----------------------
+  // --- Dots
   const dots = svg.append('g').attr('class', 'dots');
 
   dots
@@ -197,20 +208,21 @@ function renderScatterPlot(data, commits) {
     .attr('cy', (d) => yScale(d.hourFrac))
     .attr('r', 5)
     .attr('fill', 'steelblue')
-    .attr('opacity', 0.8);
+    .on('mouseenter', (event, commit) => {
+      renderTooltipContent(commit);
+      document.getElementById('commit-tooltip').style.opacity = 1;
+    })
+    .on('mouseleave', () => {
+      document.getElementById('commit-tooltip').style.opacity = 0.6;
+    });
 }
 
-
-
 // ---------------------------
-// Load, process, and render
+// Load and render
 // ---------------------------
 (async function main() {
   const data = await loadData();
-  console.log('Sample data:', data[0]);
-
   const commits = processCommits(data);
-  console.log('Processed commits:', commits.slice(0, 5));
 
   renderCommitInfo(data, commits);
   renderScatterPlot(data, commits);
