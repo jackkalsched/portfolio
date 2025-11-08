@@ -182,7 +182,7 @@ img {
 /* META */
 
 .gridlines line {
-  stroke: #ccc;       
+  stroke: #D3D3D3;       
   stroke-opacity: 0.5;
   shape-rendering: crispEdges;
 }
