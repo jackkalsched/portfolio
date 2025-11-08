@@ -141,13 +141,35 @@ function renderScatterPlot(data, commits) {
 // ---------- COMMIT STATS ----------
 function renderCommitInfo(data, commits) {
   const dl = d3.select('#stats').append('dl').attr('class', 'stats');
+
   function metric(label, val) {
     const div = dl.append('div').attr('class', 'stat-item');
     div.append('dt').html(label);
     div.append('dd').html(val);
   }
+
+  // --- Core metrics ---
   metric('Total Commits', commits.length);
   metric('Total LOC', data.length);
+
+  // --- Added back metrics ---
+  const numFiles = d3.group(data, (d) => d.file).size;
+  metric('Number of Files', numFiles);
+
+  const workByPeriod = d3.rollups(
+    data,
+    (v) => v.length,
+    (d) => {
+      const hour = d.datetime.getHours();
+      if (hour >= 5 && hour < 12) return 'Morning';
+      if (hour >= 12 && hour < 17) return 'Afternoon';
+      if (hour >= 17 && hour < 21) return 'Evening';
+      return 'Night';
+    }
+  );
+  const maxPeriod = d3.greatest(workByPeriod, (d) => d[1]);
+  const mostWorkPeriod = maxPeriod ? maxPeriod[0] : 'N/A';
+  metric('Most Productive Time of Day', mostWorkPeriod);
 }
 
 // ---------- MAIN ----------
