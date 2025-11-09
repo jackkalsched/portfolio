@@ -79,6 +79,11 @@ function updateTooltipPosition(event) {
   tooltip.style.top = `${event.clientY + offset}px`;
 }
 
+function createBrushSelector(svg) {
+  svg.call(d3.brush());
+}
+
+
 // ---------- SCATTERPLOT ----------
 function renderScatterPlot(data, commits) {
   if (!commits?.length) {
@@ -118,14 +123,13 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
-  // --- Radius scale (with perceptually accurate area)
   const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
   const rScale = d3
     .scaleSqrt()
     .domain([minLines, maxLines])
-    .range([4, 25]); // optional tweak for subtler size variation
+    .range([4, 25]);
 
-  // --- Gridlines (draw first, behind dots)
+  // --- Gridlines
   svg
     .append("g")
     .attr("class", "gridlines")
@@ -148,11 +152,11 @@ function renderScatterPlot(data, commits) {
     .attr("transform", `translate(${usableArea.left},0)`)
     .call(yAxis);
 
-  // --- Sort commits so large dots render first (smaller dots on top)
+  // --- Sort commits so large dots render first (smaller dots hover on top)
   const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
 
   // --- Draw dots
-  svg
+  const dots = svg
     .append("g")
     .attr("class", "dots")
     .selectAll("circle")
@@ -162,7 +166,7 @@ function renderScatterPlot(data, commits) {
     .attr("cy", (d) => yScale(d.hourFrac))
     .attr("r", (d) => rScale(d.totalLines))
     .attr("fill", "steelblue")
-    .style("fill-opacity", 0.65) // optional tweak for balanced overlap visibility
+    .style("fill-opacity", 0.65)
     .on("mouseenter", (event, commit) => {
       d3.select(event.currentTarget).style("fill-opacity", 1);
       renderTooltipContent(commit);
@@ -174,8 +178,13 @@ function renderScatterPlot(data, commits) {
       d3.select(event.currentTarget).style("fill-opacity", 0.65);
       updateTooltipVisibility(false);
     });
-}
 
+  // --- Step 5.1: create the brush
+  createBrushSelector(svg);
+
+  // --- Step 5.2: raise dots so tooltips still work
+  svg.selectAll(".dots, .overlay ~ *").raise();
+}
 
 
 // ---------- COMMIT STATS ----------
