@@ -86,6 +86,7 @@ function renderScatterPlot(data, commits) {
     return;
   }
 
+  // --- Dimensions & margins
   const width = 1000;
   const height = 600;
   const margin = { top: 10, right: 10, bottom: 30, left: 20 };
@@ -98,6 +99,7 @@ function renderScatterPlot(data, commits) {
     height: height - margin.top - margin.bottom,
   };
 
+  // --- SVG setup
   const svg = d3
     .select("#chart")
     .append("svg")
@@ -116,14 +118,14 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
-  // --- Radius scale with perceptually correct area
+  // --- Radius scale (with perceptually accurate area)
   const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
   const rScale = d3
     .scaleSqrt()
     .domain([minLines, maxLines])
-    .range([2, 30]);
+    .range([4, 25]); // optional tweak for subtler size variation
 
-  // --- Gridlines
+  // --- Gridlines (draw first, behind dots)
   svg
     .append("g")
     .attr("class", "gridlines")
@@ -146,7 +148,7 @@ function renderScatterPlot(data, commits) {
     .attr("transform", `translate(${usableArea.left},0)`)
     .call(yAxis);
 
-  // --- Sort commits so large dots render first (smaller ones on top)
+  // --- Sort commits so large dots render first (smaller dots on top)
   const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
 
   // --- Draw dots
@@ -160,7 +162,7 @@ function renderScatterPlot(data, commits) {
     .attr("cy", (d) => yScale(d.hourFrac))
     .attr("r", (d) => rScale(d.totalLines))
     .attr("fill", "steelblue")
-    .style("fill-opacity", 0.7)
+    .style("fill-opacity", 0.65) // optional tweak for balanced overlap visibility
     .on("mouseenter", (event, commit) => {
       d3.select(event.currentTarget).style("fill-opacity", 1);
       renderTooltipContent(commit);
@@ -169,10 +171,11 @@ function renderScatterPlot(data, commits) {
     })
     .on("mousemove", (event) => updateTooltipPosition(event))
     .on("mouseleave", (event) => {
-      d3.select(event.currentTarget).style("fill-opacity", 0.7);
+      d3.select(event.currentTarget).style("fill-opacity", 0.65);
       updateTooltipVisibility(false);
     });
 }
+
 
 
 // ---------- COMMIT STATS ----------
