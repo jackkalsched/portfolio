@@ -74,8 +74,9 @@ function updateTooltipVisibility(isVisible) {
 
 function updateTooltipPosition(event) {
   const tooltip = document.getElementById('commit-tooltip');
-  tooltip.style.left = `${event.clientX}px`;
-  tooltip.style.top = `${event.clientY}px`;
+  const offset = 15;
+  tooltip.style.left = `${event.clientX + offset}px`;
+  tooltip.style.top = `${event.clientY + offset}px`;
 }
 
 // ---------- SCATTERPLOT ----------
@@ -144,9 +145,7 @@ function renderScatterPlot(data, commits) {
       updateTooltipPosition(event);
     })
     .on('mousemove', (event) => updateTooltipPosition(event))
-    .on('mouseleave', () => {
-      updateTooltipVisibility(false);
-    });
+    .on('mouseleave', () => updateTooltipVisibility(false));
 }
 
 // ---------- COMMIT STATS ----------
