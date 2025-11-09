@@ -42,7 +42,7 @@ function processCommits(data) {
   });
 }
 
-// ---------- TOOLTIP CONTENT ----------
+// ---------- TOOLTIP HELPERS ----------
 function renderTooltipContent(commit) {
   const link = document.getElementById('commit-link');
   const date = document.getElementById('commit-date');
@@ -65,6 +65,17 @@ function renderTooltipContent(commit) {
 
   author.textContent = commit.author || 'Unknown';
   lines.textContent = commit.totalLines || 0;
+}
+
+function updateTooltipVisibility(isVisible) {
+  const tooltip = document.getElementById('commit-tooltip');
+  tooltip.hidden = !isVisible;
+}
+
+function updateTooltipPosition(event) {
+  const tooltip = document.getElementById('commit-tooltip');
+  tooltip.style.left = `${event.clientX + 12}px`;
+  tooltip.style.top = `${event.clientY + 12}px`;
 }
 
 // ---------- SCATTERPLOT ----------
@@ -100,13 +111,13 @@ function renderScatterPlot(data, commits) {
 
   const yScale = d3.scaleLinear().domain([0, 24]).range([usableArea.bottom, usableArea.top]);
 
-  // --- gridlines
+  // Gridlines
   svg.append('g')
     .attr('class', 'gridlines')
     .attr('transform', `translate(${usableArea.left},0)`)
     .call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width));
 
-  // --- axes
+  // Axes
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3.axisLeft(yScale).tickFormat((d) => `${String(d % 24).padStart(2, '0')}:00`);
 
@@ -117,9 +128,7 @@ function renderScatterPlot(data, commits) {
     .attr('transform', `translate(${usableArea.left},0)`)
     .call(yAxis);
 
-  // --- dots
-  const tooltipEl = document.getElementById('commit-tooltip');
-
+  // Dots
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
@@ -129,47 +138,46 @@ function renderScatterPlot(data, commits) {
     .attr('cy', (d) => yScale(d.hourFrac))
     .attr('r', 5)
     .attr('fill', 'steelblue')
-    .on('mouseenter', (event, d) => {
-      renderTooltipContent(d);
-      tooltipEl.style.opacity = 1;
+    .on('mouseenter', (event, commit) => {
+      renderTooltipContent(commit);
+      updateTooltipVisibility(true);
+      updateTooltipPosition(event);
     })
+    .on('mousemove', (event) => updateTooltipPosition(event))
     .on('mouseleave', () => {
-      tooltipEl.style.opacity = 0;
+      updateTooltipVisibility(false);
     });
 }
 
 // ---------- COMMIT STATS ----------
 function renderCommitInfo(data, commits) {
+  d3.select('#stats').selectAll('*').remove();
   const dl = d3.select('#stats').append('dl').attr('class', 'stats');
-
-  function metric(label, val) {
+  const metric = (label, val) => {
     const div = dl.append('div').attr('class', 'stat-item');
     div.append('dt').html(label);
     div.append('dd').html(val);
-  }
+  };
 
-  // --- Core metrics ---
   metric('Total Commits', commits.length);
   metric('Total LOC', data.length);
 
-  // --- Added back metrics ---
-  const numFiles = d3.group(data, (d) => d.file).size;
+  const numFiles = 'file' in data[0] ? d3.group(data, (d) => d.file).size : 'N/A';
   metric('Number of Files', numFiles);
 
   const workByPeriod = d3.rollups(
     data,
     (v) => v.length,
     (d) => {
-      const hour = d.datetime.getHours();
-      if (hour >= 5 && hour < 12) return 'Morning';
-      if (hour >= 12 && hour < 17) return 'Afternoon';
-      if (hour >= 17 && hour < 21) return 'Evening';
+      const h = d.datetime.getHours();
+      if (h >= 5 && h < 12) return 'Morning';
+      if (h >= 12 && h < 17) return 'Afternoon';
+      if (h >= 17 && h < 21) return 'Evening';
       return 'Night';
     }
   );
   const maxPeriod = d3.greatest(workByPeriod, (d) => d[1]);
-  const mostWorkPeriod = maxPeriod ? maxPeriod[0] : 'N/A';
-  metric('Most Productive Time of Day', mostWorkPeriod);
+  metric('Most Productive Time of Day', maxPeriod ? maxPeriod[0] : 'N/A');
 }
 
 // ---------- MAIN ----------
