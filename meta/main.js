@@ -104,6 +104,7 @@ function renderScatterPlot(data, commits) {
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
 
+  // --- Scales
   const xScale = d3
     .scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
@@ -114,12 +115,11 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
-  // --- NEW: Radius scale for number of lines edited
   const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
   const rScale = d3
-    .scaleLinear()
+    .scaleSqrt() // ensures area perception is correct
     .domain([minLines, maxLines])
-    .range([2, 30]); // adjust as needed
+    .range([2, 30]); // adjust if needed
 
   // --- Gridlines
   svg.append('g')
@@ -140,11 +140,14 @@ function renderScatterPlot(data, commits) {
     .attr('transform', `translate(${usableArea.left},0)`)
     .call(yAxis);
 
-  // --- Dots (with variable radius and transparency)
+  // --- Sort commits so large dots render first (smaller ones on top)
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+
+  // --- Dots (with correct layering, radius, and hover behavior)
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
-    .data(commits)
+    .data(sortedCommits)
     .join('circle')
     .attr('cx', (d) => xScale(d.datetime))
     .attr('cy', (d) => yScale(d.hourFrac))
@@ -152,7 +155,6 @@ function renderScatterPlot(data, commits) {
     .attr('fill', 'steelblue')
     .style('fill-opacity', 0.7)
     .on('mouseenter', (event, commit) => {
-      // Increase opacity and show tooltip
       d3.select(event.currentTarget).style('fill-opacity', 1);
       renderTooltipContent(commit);
       updateTooltipVisibility(true);
@@ -160,11 +162,11 @@ function renderScatterPlot(data, commits) {
     })
     .on('mousemove', (event) => updateTooltipPosition(event))
     .on('mouseleave', (event) => {
-      // Restore opacity and hide tooltip
       d3.select(event.currentTarget).style('fill-opacity', 0.7);
       updateTooltipVisibility(false);
     });
 }
+
 
 
 // ---------- COMMIT STATS ----------
