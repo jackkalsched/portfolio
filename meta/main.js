@@ -110,26 +110,37 @@ function renderScatterPlot(data, commits) {
     .range([usableArea.left, usableArea.right])
     .nice();
 
-  const yScale = d3.scaleLinear().domain([0, 24]).range([usableArea.bottom, usableArea.top]);
+  const yScale = d3.scaleLinear()
+    .domain([0, 24])
+    .range([usableArea.bottom, usableArea.top]);
 
-  // Gridlines
+  // --- NEW: Radius scale for number of lines edited
+  const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+  const rScale = d3
+    .scaleLinear()
+    .domain([minLines, maxLines])
+    .range([2, 30]); // adjust as needed
+
+  // --- Gridlines
   svg.append('g')
     .attr('class', 'gridlines')
     .attr('transform', `translate(${usableArea.left},0)`)
     .call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width));
 
-  // Axes
+  // --- Axes
   const xAxis = d3.axisBottom(xScale);
-  const yAxis = d3.axisLeft(yScale).tickFormat((d) => `${String(d % 24).padStart(2, '0')}:00`);
+  const yAxis = d3.axisLeft(yScale)
+    .tickFormat((d) => `${String(d % 24).padStart(2, '0')}:00`);
 
   svg.append('g')
     .attr('transform', `translate(0,${usableArea.bottom})`)
     .call(xAxis);
+
   svg.append('g')
     .attr('transform', `translate(${usableArea.left},0)`)
     .call(yAxis);
 
-  // Dots
+  // --- Dots (with variable radius and transparency)
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
@@ -137,16 +148,24 @@ function renderScatterPlot(data, commits) {
     .join('circle')
     .attr('cx', (d) => xScale(d.datetime))
     .attr('cy', (d) => yScale(d.hourFrac))
-    .attr('r', 5)
+    .attr('r', (d) => rScale(d.totalLines))
     .attr('fill', 'steelblue')
+    .style('fill-opacity', 0.7)
     .on('mouseenter', (event, commit) => {
+      // Increase opacity and show tooltip
+      d3.select(event.currentTarget).style('fill-opacity', 1);
       renderTooltipContent(commit);
       updateTooltipVisibility(true);
       updateTooltipPosition(event);
     })
     .on('mousemove', (event) => updateTooltipPosition(event))
-    .on('mouseleave', () => updateTooltipVisibility(false));
+    .on('mouseleave', (event) => {
+      // Restore opacity and hide tooltip
+      d3.select(event.currentTarget).style('fill-opacity', 0.7);
+      updateTooltipVisibility(false);
+    });
 }
+
 
 // ---------- COMMIT STATS ----------
 function renderCommitInfo(data, commits) {
