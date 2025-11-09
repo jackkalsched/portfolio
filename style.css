@@ -280,3 +280,10 @@ circle.selected {
   font-weight: 500;
   color: CanvasText;
 }
+
+@media (max-width: 600px) {
+  #language-breakdown {
+    grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+    gap: 1rem;
+  }
+}
