@@ -178,12 +178,13 @@ function renderScatterPlot(data, commits) {
       updateTooltipVisibility(false);
     });
 
-    // --- Step 5.1: create brush selector
-    createBrushSelector(svg);
+  // --- Step 5.1: create brush
+  svg.call(d3.brush());
 
-    // --- Step 5.2: ensure dots and overlays render above gridlines for hover
-    svg.selectAll(".overlay, .dots").raise();
-  }
+  // --- Step 5.2: raise dots and everything after overlay
+  svg.selectAll(".dots, .overlay ~ *").raise();
+}
+
 
 
 // ---------- COMMIT STATS ----------
