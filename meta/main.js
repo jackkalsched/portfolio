@@ -83,7 +83,6 @@ function createBrushSelector(svg) {
   svg.call(d3.brush());
 }
 
-
 // ---------- SCATTERPLOT ----------
 function renderScatterPlot(data, commits) {
   if (!commits?.length) {
@@ -179,12 +178,12 @@ function renderScatterPlot(data, commits) {
       updateTooltipVisibility(false);
     });
 
-  // --- Step 5.1: create the brush
-  createBrushSelector(svg);
+    // --- Step 5.1: create brush selector
+    createBrushSelector(svg);
 
-  // --- Step 5.2: raise dots so tooltips still work
-  svg.selectAll(".dots, .overlay ~ *").raise();
-}
+    // --- Step 5.2: ensure dots and overlays render above gridlines for hover
+    svg.selectAll(".overlay, .dots").raise();
+  }
 
 
 // ---------- COMMIT STATS ----------
