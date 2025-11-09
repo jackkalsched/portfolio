@@ -79,14 +79,14 @@ function updateTooltipPosition(event) {
   tooltip.style.top = `${event.clientY + offset}px`;
 }
 
-// ---------- BRUSH HELPERS ----------
+// ---------- BRUSH LOGIC ----------
+let xScale, yScale; // make global for brush access
+
 function isCommitSelected(selection, commit) {
   if (!selection) return false;
-
   const [[x0, y0], [x1, y1]] = selection;
   const cx = xScale(commit.datetime);
   const cy = yScale(commit.hourFrac);
-
   return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
 }
 
@@ -123,11 +123,9 @@ function renderLanguageBreakdown(selection, commits) {
   );
 
   container.innerHTML = '';
-
   for (const [language, count] of breakdown) {
     const proportion = count / lines.length;
     const formatted = d3.format('.1~%')(proportion);
-
     container.innerHTML += `
       <dt>${language}</dt>
       <dd>${count} lines (${formatted})</dd>
@@ -147,8 +145,6 @@ function brushed(event, commits) {
 }
 
 // ---------- SCATTERPLOT ----------
-let xScale, yScale; // Declare globally for brush access
-
 function renderScatterPlot(data, commits) {
   if (!commits?.length) {
     console.error('No commits for scatterplot');
@@ -175,7 +171,7 @@ function renderScatterPlot(data, commits) {
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
 
-  // --- Scales (assign to globals)
+  // --- Scales (store globally for brush)
   xScale = d3
     .scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
@@ -216,11 +212,9 @@ function renderScatterPlot(data, commits) {
     .attr('transform', `translate(${usableArea.left},0)`)
     .call(yAxis);
 
-  // --- Sort commits so large dots render first
-  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
-
   // --- Draw dots
-  const dots = svg
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+  svg
     .append('g')
     .attr('class', 'dots')
     .selectAll('circle')
@@ -243,10 +237,10 @@ function renderScatterPlot(data, commits) {
       updateTooltipVisibility(false);
     });
 
-  // --- Step 5.1: Create brush and listen for events
+  // --- Step 5.1 & 5.4: Create brush + events
   svg.call(d3.brush().on('start brush end', (event) => brushed(event, commits)));
 
-  // --- Step 5.2: Raise dots and everything after overlay
+  // --- Step 5.2: Raise dots back above overlay for hover
   svg.selectAll('.dots, .overlay ~ *').raise();
 }
 

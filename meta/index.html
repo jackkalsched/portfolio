@@ -1,60 +1,43 @@
 <!DOCTYPE html>
-<html lang="en"
-  style="--color-accent: oklch(85% 15% 10); accent-color: var(--color-accent);">
+<html lang="en" style="--color-accent: oklch(56.411% 0.09253 204.546); accent-color: var(--color-accent);">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meta | Jack Kalsched</title>
+
+  <!-- Styles -->
   <link rel="stylesheet" href="../style.css" />
+
+  <!-- Scripts -->
   <script type="module" src="../global.js"></script>
   <script type="module" src="main.js"></script>
-  <style>
-    body {
-      max-width: 100ch;
-      padding: 1rem;
-      margin-inline: auto;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    #chart {
-      width: 100%;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    #chart svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid oklch(80% 3% 200);
-      background-color: oklch(98% 1% 200 / 0.1);
-    }
-  </style>
 </head>
 
 <body>
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../projects/index.html">Projects</a>
+    <a href="../meta/index.html" class="current">Meta</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
   <h1>Codebase Statistics</h1>
   <p>
     This page displays various statistics and metrics about the codebase,
-    including lines of code, file counts, and other code analysis data.
+    including commit history, line changes, and language breakdowns.
   </p>
 
-  <div id="stats"></div>
+  <!-- Summary Statistics -->
+  <div id="stats" class="stats"></div>
 
+  <!-- Scatterplot -->
   <h2>Commits by time of day</h2>
   <div id="chart"></div>
+
+  <!-- Brush Selection Info -->
   <p id="selection-count">No commits selected</p>
   <dl id="language-breakdown" class="stats"></dl>
-
 
   <!-- Tooltip (hidden by default) -->
   <dl id="commit-tooltip" class="info tooltip" hidden>
@@ -73,5 +56,12 @@
     <dt>Lines Edited</dt>
     <dd id="commit-lines"></dd>
   </dl>
+
+  <!-- Dark Mode Toggle -->
+  <select id="color-scheme" class="color-scheme">
+    <option value="auto">Auto</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
 </body>
 </html>
