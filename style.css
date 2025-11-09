@@ -238,7 +238,6 @@ circle:hover {
   transform: scale(1.5);
 }
 
-/* ------- BRUSHING EFFECTS -------- */
 
 @keyframes marching-ants {
   to {
@@ -254,7 +253,30 @@ circle:hover {
   animation: marching-ants 2s linear infinite;
 }
 
-/* Highlight brushed commits */
 circle.selected {
   fill: #ff6b6b;
+}
+
+#language-breakdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+  gap: 2rem;                  
+  text-align: center;
+  justify-items: center;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+#language-breakdown dt {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: lowercase;
+  margin-bottom: 0.25rem;
+}
+
+#language-breakdown dd {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: CanvasText;
 }
