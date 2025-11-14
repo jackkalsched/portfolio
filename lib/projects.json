@@ -14,7 +14,7 @@
     {
       "title": "Bikah!",
       "year": "2025",
-      "image": "/Users/jackkalsched/Downloads/portfolio/Screenshot 2025-11-13 at 10.12.22 PM.png",
+      "image": "../Screenshot 2025-11-13 at 10.12.22 PM.png",
       "description": "Visualizing bike traffic in boston, utilizing interactive d3.js elements."
     },
     {
