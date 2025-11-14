@@ -2,7 +2,7 @@
     {
       "title": "SMT Data Challenge: The Man in the Middle",
       "year": "2025",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+      "image": "../Screenshot 2025-10-25 at 8.54.59 PM.png",
       "description": "I created an optimal cutoff decision model for professional baseball using random forest models and expected run value formulas."
     },
     {
@@ -12,10 +12,10 @@
       "description": "Input pitch characteristics (Spin Rate, IVB, HB, VAA, etc.) and see what pitch comes out! Used unsupervised and supervised classification models."
     },
     {
-      "title": "Iure dolorem delectus nisi.",
-      "year": "2022",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Reprehenderit similique reiciendis voluptatibus nesciunt..."
+      "title": "Bikah!",
+      "year": "2025",
+      "image": "/Users/jackkalsched/Downloads/portfolio/Screenshot 2025-11-13 at 10.12.22 PM.png",
+      "description": "Visualizing bike traffic in boston, utilizing interactive d3.js elements."
     },
     {
       "title": "Pariatur facere beatae molestiae!",
