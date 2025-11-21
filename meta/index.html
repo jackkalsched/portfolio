@@ -20,6 +20,15 @@
     including commit history, line changes, and language breakdowns.
   </p>
 
+  <!-- Time Filter Slider -->
+  <div style="display: flex; align-items: baseline; margin-bottom: 1rem;">
+    <label for="commit-progress" style="flex: 1;">
+      Show commits until:
+      <input type="range" id="commit-progress" min="0" max="100" value="100" />
+    </label>
+    <time id="commit-time" style="margin-left: auto;"></time>
+  </div>
+
   <!-- Summary Statistics -->
   <div id="stats" class="stats"></div>
 

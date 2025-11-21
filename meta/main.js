@@ -275,10 +275,50 @@ function renderCommitInfo(data, commits) {
   metric('Most Productive Time of Day', maxPeriod ? maxPeriod[0] : 'N/A');
 }
 
+// ---------- TIME FILTERING ----------
+let commitProgress = 100;
+let commitMaxTime;
+let timeScale;
+
+function onTimeSliderChange(commits) {
+  const slider = document.getElementById('commit-progress');
+  const timeElement = document.getElementById('commit-time');
+  
+  commitProgress = Number(slider.value);
+  commitMaxTime = timeScale.invert(commitProgress);
+  
+  if (timeElement && commitMaxTime) {
+    timeElement.textContent = commitMaxTime.toLocaleString('en', {
+      dateStyle: 'long',
+      timeStyle: 'short'
+    });
+  }
+}
+
 // ---------- MAIN ----------
 (async function main() {
   const data = await loadData();
   const commits = processCommits(data);
+  
+  // Create time scale for filtering
+  timeScale = d3
+    .scaleTime()
+    .domain([
+      d3.min(commits, (d) => d.datetime),
+      d3.max(commits, (d) => d.datetime),
+    ])
+    .range([0, 100]);
+  
+  commitMaxTime = timeScale.invert(commitProgress);
+  
+  // Set up slider event listener
+  const slider = document.getElementById('commit-progress');
+  if (slider) {
+    slider.addEventListener('input', () => onTimeSliderChange(commits));
+    // Initialize the time display
+    onTimeSliderChange(commits);
+  }
+  
   renderCommitInfo(data, commits);
   renderScatterPlot(data, commits);
 })();
