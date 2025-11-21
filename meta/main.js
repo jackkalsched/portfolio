@@ -162,7 +162,7 @@ function brushed(event, commits) {
 function renderScatterPlot(data, commits) {
   const width = 1000;
   const height = 600;
-  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+  const margin = { top: 10, right: 10, bottom: 30, left: 50 };
 
   const usableArea = {
     top: margin.top,
@@ -176,6 +176,8 @@ function renderScatterPlot(data, commits) {
   const svg = d3
     .select("#chart")
     .append("svg")
+    .attr("width", width)
+    .attr("height", height)
     .attr("viewBox", `0 0 ${width} ${height}`)
     .style("overflow", "visible");
 
@@ -245,7 +247,8 @@ function renderScatterPlot(data, commits) {
       updateTooltipVisibility(false);
     });
 
-  // brush
+  // brush - use filtered commits for brush interactions
+  svg.selectAll('.brush').remove();
   svg.call(
     d3.brush().on("start brush end", (event) => brushed(event, commits))
   );
@@ -255,7 +258,7 @@ function renderScatterPlot(data, commits) {
 function updateScatterPlot(data, commits) {
   const width = 1000;
   const height = 600;
-  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+  const margin = { top: 10, right: 10, bottom: 30, left: 50 };
   const usableArea = {
     top: margin.top,
     right: width - margin.right,
@@ -306,6 +309,12 @@ function updateScatterPlot(data, commits) {
       d3.select(event.currentTarget).style('fill-opacity', 0.7);
       updateTooltipVisibility(false);
     });
+  
+  // Update brush to use filtered commits
+  svg.selectAll('.brush').remove();
+  svg.call(
+    d3.brush().on("start brush end", (event) => brushed(event, commits))
+  );
 }
 
 // ---------- COMMIT STATS ----------
