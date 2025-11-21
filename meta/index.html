@@ -1,62 +1,72 @@
 <!DOCTYPE html>
-<html lang="en" style="--color-accent: oklch(56.411% 0.09253 204.546); accent-color: var(--color-accent);">
+
+<html lang="en">
+<link rel="stylesheet" href="/portfolio/style.css">
+<script>
+    // Detect environment and set correct base path
+    const basePath =
+      location.hostname === "localhost" || location.hostname === "127.0.0.1"
+        ? ""
+        : "/portfolio";
+    // Inject stylesheet and global.js dynamically
+    document.write(
+      '<link rel="stylesheet" href="' +
+        basePath +
+        '/style.css">' +
+        '<script type="module" src="' +
+        basePath +
+        '/global.js" defer></' +
+        'script>'
+    );
+  </script>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meta | Jack Kalsched</title>
-
-  <!-- Global site stylesheet -->
-  <link rel="stylesheet" href="../style.css" />
-
-  <!-- Global scripts -->
-  <script type="module" src="../global.js"></script>
-  <script type="module" src="main.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>meta</title>
 </head>
-
 <body>
-  <h1>Codebase Statistics</h1>
-  <p>
-    This page displays various statistics and metrics about the codebase,
-    including commit history, line changes, and language breakdowns.
-  </p>
-
-  <!-- Time Filter Slider -->
-  <div style="display: flex; align-items: baseline; margin-bottom: 1rem;">
-    <label for="commit-progress" style="flex: 1;">
-      Show commits until:
-      <input type="range" id="commit-progress" min="0" max="100" value="100" />
-    </label>
-    <time id="commit-time" style="margin-left: auto;"></time>
+    <h1>Meta</h1>
+    <text>This page includes stats about the code of this website.</text>
+    <script type="module" src="./main.js"></script>
+    <!-- Progress Filter -->
+<div style="display: flex; align-items: baseline; gap: 1rem; margin-top: 1.5rem;">
+  <label for="commit-progress" style="flex: 1;">
+    Show commits until:
+    <input
+      type="range"
+      id="commit-progress"
+      min="0"
+      max="100"
+      value="100"
+    >
+  </label>
+  <time id="commit-time" style="margin-left: auto;">--:--</time>
+</div>
+    <div id = "stats"></div>
+<div id="scrolly-1">
+    <!-- LEFT SIDE: EXPLANATORY TEXT -->
+    <div id="scatter-story">
+    </div>
+    <div id="scatter-plot">
+      <h2>Commits by time of day</h2>
+      <div id="chart"></div>
+      <p id="selection-count">No commits selected</p>
+      <dl id="language-breakdown" class="stats"></dl>
+      <dl id="commit-tooltip" class="info tooltip" hidden>
+        <dt>Commit</dt>
+        <dd><a href="" id="commit-link" target="_blank"></a></dd>
+        <dt>Date</dt>
+        <dd id="commit-date"></dd>
+        <dt>Time</dt>
+        <dd id="commit-tooltip-time"></dd>
+        <dt>Author</dt>
+        <dd id="commit-author"></dd>
+        <dt>Lines Edited</dt>
+        <dd id="commit-lines"></dd>
+      </dl>
+    </div>
   </div>
-
-  <!-- Summary Statistics -->
-  <div id="stats" class="stats"></div>
-
-  <!-- Scatterplot -->
-  <h2>Commits by time of day</h2>
-  <div id="chart"></div>
-
-  <!-- Brush Selection Info -->
-  <p id="selection-count">No commits selected</p>
-  <dl id="language-breakdown" class="stats"></dl>
-
-  <!-- Tooltip (hidden by default) -->
-  <dl id="commit-tooltip" class="info tooltip" hidden>
-    <dt>Commit</dt>
-    <dd><a href="" id="commit-link" target="_blank"></a></dd>
-
-    <dt>Date</dt>
-    <dd id="commit-date"></dd>
-
-    <dt>Time</dt>
-    <dd id="commit-tooltip-time"></dd>
-
-    <dt>Author</dt>
-    <dd id="commit-author"></dd>
-
-    <dt>Lines Edited</dt>
-    <dd id="commit-lines"></dd>
-  </dl>
+<dl id="files">
+</dl>
 </body>
 </html>
-
