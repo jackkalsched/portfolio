@@ -256,6 +256,10 @@ function renderScatterPlot(data, commits) {
 
 // ---------- UPDATE SCATTERPLOT ----------
 function updateScatterPlot(data, commits) {
+  if (!commits || commits.length === 0) {
+    return;
+  }
+
   const width = 1000;
   const height = 600;
   const margin = { top: 10, right: 10, bottom: 30, left: 50 };
@@ -275,7 +279,11 @@ function updateScatterPlot(data, commits) {
     return;
   }
 
-  xScale = xScale.domain(d3.extent(commits, (d) => d.datetime));
+  // Update xScale domain with filtered commits
+  const dateExtent = d3.extent(commits, (d) => d.datetime);
+  if (dateExtent[0] && dateExtent[1]) {
+    xScale = xScale.domain(dateExtent).range([usableArea.left, usableArea.right]).nice();
+  }
 
   const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
   const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
@@ -292,23 +300,28 @@ function updateScatterPlot(data, commits) {
   const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
   dots
     .selectAll('circle')
-    .data(sortedCommits)
-    .join('circle')
+    .data(sortedCommits, (d) => d.id)
+    .join(
+      (enter) => enter
+        .append('circle')
+        .attr('fill', 'steelblue')
+        .style('fill-opacity', 0.7)
+        .on('mouseenter', (event, commit) => {
+          d3.select(event.currentTarget).style('fill-opacity', 1);
+          renderTooltipContent(commit);
+          updateTooltipVisibility(true);
+          updateTooltipPosition(event);
+        })
+        .on('mouseleave', (event) => {
+          d3.select(event.currentTarget).style('fill-opacity', 0.7);
+          updateTooltipVisibility(false);
+        }),
+      (update) => update,
+      (exit) => exit.remove()
+    )
     .attr('cx', (d) => xScale(d.datetime))
     .attr('cy', (d) => yScale(d.hourFrac))
-    .attr('r', (d) => rScale(d.totalLines))
-    .attr('fill', 'steelblue')
-    .style('fill-opacity', 0.7)
-    .on('mouseenter', (event, commit) => {
-      d3.select(event.currentTarget).style('fill-opacity', 1);
-      renderTooltipContent(commit);
-      updateTooltipVisibility(true);
-      updateTooltipPosition(event);
-    })
-    .on('mouseleave', (event) => {
-      d3.select(event.currentTarget).style('fill-opacity', 0.7);
-      updateTooltipVisibility(false);
-    });
+    .attr('r', (d) => rScale(d.totalLines));
   
   // Update brush to use filtered commits
   svg.selectAll('.brush').remove();
