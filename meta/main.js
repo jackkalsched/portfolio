@@ -46,7 +46,7 @@ function processCommits(data) {
 function renderTooltipContent(commit) {
   const link = document.getElementById('commit-link');
   const date = document.getElementById('commit-date');
-  const time = document.getElementById('commit-time');
+  const time = document.getElementById('commit-tooltip-time');
   const author = document.getElementById('commit-author');
   const lines = document.getElementById('commit-lines');
 
@@ -284,14 +284,18 @@ function onTimeSliderChange(commits) {
   const slider = document.getElementById('commit-progress');
   const timeElement = document.getElementById('commit-time');
   
+  if (!slider || !timeElement) return;
+  
   commitProgress = Number(slider.value);
   commitMaxTime = timeScale.invert(commitProgress);
   
-  if (timeElement && commitMaxTime) {
-    timeElement.textContent = commitMaxTime.toLocaleString('en', {
+  if (commitMaxTime && commitMaxTime instanceof Date && !isNaN(commitMaxTime)) {
+    const formattedDate = commitMaxTime.toLocaleString('en', {
       dateStyle: 'long',
       timeStyle: 'short'
     });
+    timeElement.textContent = formattedDate;
+    timeElement.setAttribute('datetime', commitMaxTime.toISOString());
   }
 }
 
