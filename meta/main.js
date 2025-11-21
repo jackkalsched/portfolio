@@ -266,6 +266,11 @@ function updateScatterPlot(data, commits) {
   };
 
   const svg = d3.select('#chart').select('svg');
+  
+  // If SVG doesn't exist yet, don't try to update
+  if (svg.empty()) {
+    return;
+  }
 
   xScale = xScale.domain(d3.extent(commits, (d) => d.datetime));
 
@@ -384,15 +389,23 @@ function onTimeSliderChange() {
 
   commitMaxTime = timeScale.invert(commitProgress);
 
+  // Initial render of stats and scatterplot
+  renderCommitInfo(data, commits);
+  renderScatterPlot(data, commits);
+
   // Set up slider event listener
   const slider = document.getElementById('commit-progress');
   if (slider) {
     slider.addEventListener('input', () => onTimeSliderChange());
-    // Initialize the time display and initial render
-    onTimeSliderChange();
+    // Initialize the time display (but don't update plot yet since it's already rendered)
+    const timeElement = document.getElementById('commit-time');
+    if (timeElement && commitMaxTime && commitMaxTime instanceof Date && !isNaN(commitMaxTime)) {
+      const formattedDate = commitMaxTime.toLocaleString('en', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+      });
+      timeElement.textContent = formattedDate;
+      timeElement.setAttribute('datetime', commitMaxTime.toISOString());
+    }
   }
-
-  // Initial render of stats and scatterplot
-  renderCommitInfo(data, commits);
-  renderScatterPlot(data, commits);
 })();
